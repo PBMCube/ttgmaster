@@ -8,3 +8,4 @@ C:\Users\Christopher\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster
 C:\Users\Christopher\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.exe
 C:\Users\Christopher\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.xml
 C:\Users\Christopher\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.pdb
+C:\Users\Christopher\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.Form2.resources

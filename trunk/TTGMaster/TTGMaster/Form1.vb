@@ -1,4 +1,4 @@
-﻿Public Class MainForm
+﻿Public Class Form1
 
     Dim versionNum As String = "v0.1.0"
 
@@ -13,6 +13,6 @@
     End Sub
 
     Private Sub ConnectToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectToolStripMenuItem.Click
-
+        Form2.Show()
     End Sub
 End Class
