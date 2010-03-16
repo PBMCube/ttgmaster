@@ -20,3 +20,4 @@ C:\Users\hutcha2\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.For
 C:\Users\hutcha2\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.Form2.resources
 C:\Users\hutcha2\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.Resources.resources
 C:\Users\hutcha2\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.vbproj.GenerateResource.Cache
+C:\Users\Christopher\Documents\ttgmaster\TTGMaster\TTGMaster\obj\Debug\TTGMaster.Form3.resources
