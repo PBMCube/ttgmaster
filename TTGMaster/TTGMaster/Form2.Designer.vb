@@ -23,24 +23,25 @@ Partial Class Form2
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.JoinGroup = New System.Windows.Forms.GroupBox
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.TextBox2 = New System.Windows.Forms.TextBox
         Me.Label3 = New System.Windows.Forms.Label
         Me.TextBox3 = New System.Windows.Forms.TextBox
+        Me.HostRadio = New System.Windows.Forms.RadioButton
+        Me.JoinRadio = New System.Windows.Forms.RadioButton
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox
         Me.Label4 = New System.Windows.Forms.Label
-        Me.TextBox4 = New System.Windows.Forms.TextBox
+        Me.GamePassword = New System.Windows.Forms.TextBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.UserName = New System.Windows.Forms.TextBox
         Me.HostGroup = New System.Windows.Forms.GroupBox
         Me.Label5 = New System.Windows.Forms.Label
         Me.TextBox5 = New System.Windows.Forms.TextBox
         Me.ConnectButton = New System.Windows.Forms.Button
+        Me.PortNumber = New System.Windows.Forms.NumericUpDown
         Me.JoinGroup.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.HostGroup.SuspendLayout()
+        CType(Me.PortNumber, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'JoinGroup
@@ -53,74 +54,6 @@ Partial Class Form2
         Me.JoinGroup.Size = New System.Drawing.Size(143, 71)
         Me.JoinGroup.TabIndex = 0
         Me.JoinGroup.TabStop = False
-        '
-        'RadioButton1
-        '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.Location = New System.Drawing.Point(12, 12)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(78, 17)
-        Me.RadioButton1.TabIndex = 1
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Host Game"
-        Me.RadioButton1.UseVisualStyleBackColor = True
-        '
-        'RadioButton2
-        '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Location = New System.Drawing.Point(181, 12)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(108, 17)
-        Me.RadioButton2.TabIndex = 2
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Connect to Game"
-        Me.RadioButton2.UseVisualStyleBackColor = True
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(96, 71)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(72, 20)
-        Me.TextBox1.TabIndex = 0
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(64, 74)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(26, 13)
-        Me.Label1.TabIndex = 3
-        Me.Label1.Text = "Port"
-        '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.Label4)
-        Me.GroupBox2.Controls.Add(Me.TextBox4)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.TextBox2)
-        Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Controls.Add(Me.TextBox1)
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 112)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(310, 102)
-        Me.GroupBox2.TabIndex = 1
-        Me.GroupBox2.TabStop = False
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(30, 22)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(60, 13)
-        Me.Label2.TabIndex = 5
-        Me.Label2.Text = "User Name"
-        '
-        'TextBox2
-        '
-        Me.TextBox2.Location = New System.Drawing.Point(96, 19)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(208, 20)
-        Me.TextBox2.TabIndex = 4
         '
         'Label3
         '
@@ -138,21 +71,82 @@ Partial Class Form2
         Me.TextBox3.Size = New System.Drawing.Size(131, 20)
         Me.TextBox3.TabIndex = 6
         '
+        'HostRadio
+        '
+        Me.HostRadio.AutoSize = True
+        Me.HostRadio.Location = New System.Drawing.Point(12, 12)
+        Me.HostRadio.Name = "HostRadio"
+        Me.HostRadio.Size = New System.Drawing.Size(78, 17)
+        Me.HostRadio.TabIndex = 1
+        Me.HostRadio.TabStop = True
+        Me.HostRadio.Text = "Host Game"
+        Me.HostRadio.UseVisualStyleBackColor = True
+        '
+        'JoinRadio
+        '
+        Me.JoinRadio.AutoSize = True
+        Me.JoinRadio.Location = New System.Drawing.Point(181, 12)
+        Me.JoinRadio.Name = "JoinRadio"
+        Me.JoinRadio.Size = New System.Drawing.Size(108, 17)
+        Me.JoinRadio.TabIndex = 2
+        Me.JoinRadio.TabStop = True
+        Me.JoinRadio.Text = "Connect to Game"
+        Me.JoinRadio.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(81, 48)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(26, 13)
+        Me.Label1.TabIndex = 3
+        Me.Label1.Text = "Port"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.PortNumber)
+        Me.GroupBox2.Controls.Add(Me.Label4)
+        Me.GroupBox2.Controls.Add(Me.Label2)
+        Me.GroupBox2.Controls.Add(Me.GamePassword)
+        Me.GroupBox2.Controls.Add(Me.UserName)
+        Me.GroupBox2.Controls.Add(Me.Label1)
+        Me.GroupBox2.Location = New System.Drawing.Point(12, 112)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(310, 102)
+        Me.GroupBox2.TabIndex = 1
+        Me.GroupBox2.TabStop = False
+        '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 48)
+        Me.Label4.Location = New System.Drawing.Point(6, 74)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(84, 13)
+        Me.Label4.Size = New System.Drawing.Size(101, 13)
         Me.Label4.TabIndex = 7
-        Me.Label4.Text = "Game Password"
+        Me.Label4.Text = "Password (Optional)"
         '
-        'TextBox4
+        'GamePassword
         '
-        Me.TextBox4.Location = New System.Drawing.Point(96, 45)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(208, 20)
-        Me.TextBox4.TabIndex = 6
+        Me.GamePassword.Location = New System.Drawing.Point(113, 71)
+        Me.GamePassword.Name = "GamePassword"
+        Me.GamePassword.Size = New System.Drawing.Size(191, 20)
+        Me.GamePassword.TabIndex = 6
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(47, 22)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(60, 13)
+        Me.Label2.TabIndex = 5
+        Me.Label2.Text = "User Name"
+        '
+        'UserName
+        '
+        Me.UserName.Location = New System.Drawing.Point(113, 19)
+        Me.UserName.Name = "UserName"
+        Me.UserName.Size = New System.Drawing.Size(191, 20)
+        Me.UserName.TabIndex = 4
         '
         'HostGroup
         '
@@ -191,6 +185,14 @@ Partial Class Form2
         Me.ConnectButton.Text = "Connect"
         Me.ConnectButton.UseVisualStyleBackColor = True
         '
+        'PortNumber
+        '
+        Me.PortNumber.Location = New System.Drawing.Point(113, 46)
+        Me.PortNumber.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.PortNumber.Name = "PortNumber"
+        Me.PortNumber.Size = New System.Drawing.Size(91, 20)
+        Me.PortNumber.TabIndex = 8
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -199,8 +201,8 @@ Partial Class Form2
         Me.Controls.Add(Me.ConnectButton)
         Me.Controls.Add(Me.HostGroup)
         Me.Controls.Add(Me.GroupBox2)
-        Me.Controls.Add(Me.RadioButton2)
-        Me.Controls.Add(Me.RadioButton1)
+        Me.Controls.Add(Me.JoinRadio)
+        Me.Controls.Add(Me.HostRadio)
         Me.Controls.Add(Me.JoinGroup)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -213,24 +215,25 @@ Partial Class Form2
         Me.GroupBox2.PerformLayout()
         Me.HostGroup.ResumeLayout(False)
         Me.HostGroup.PerformLayout()
+        CType(Me.PortNumber, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents JoinGroup As System.Windows.Forms.GroupBox
-    Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
-    Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents HostRadio As System.Windows.Forms.RadioButton
+    Friend WithEvents JoinRadio As System.Windows.Forms.RadioButton
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents TextBox4 As System.Windows.Forms.TextBox
+    Friend WithEvents GamePassword As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
+    Friend WithEvents UserName As System.Windows.Forms.TextBox
     Friend WithEvents HostGroup As System.Windows.Forms.GroupBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
     Friend WithEvents ConnectButton As System.Windows.Forms.Button
+    Friend WithEvents PortNumber As System.Windows.Forms.NumericUpDown
 End Class

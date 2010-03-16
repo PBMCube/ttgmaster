@@ -29,14 +29,17 @@ Partial Class Form1
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ConnectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.DisconnectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ChatInputBox
         '
+        Me.ChatInputBox.Enabled = False
         Me.ChatInputBox.Location = New System.Drawing.Point(194, 481)
         Me.ChatInputBox.Name = "ChatInputBox"
         Me.ChatInputBox.Size = New System.Drawing.Size(297, 20)
@@ -44,6 +47,7 @@ Partial Class Form1
         '
         'ChatSendButton
         '
+        Me.ChatSendButton.Enabled = False
         Me.ChatSendButton.Location = New System.Drawing.Point(497, 479)
         Me.ChatSendButton.Name = "ChatSendButton"
         Me.ChatSendButton.Size = New System.Drawing.Size(75, 23)
@@ -82,7 +86,7 @@ Partial Class Form1
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConnectToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConnectToolStripMenuItem, Me.DisconnectToolStripMenuItem, Me.ToolStripMenuItem2, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.F), System.Windows.Forms.Keys)
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
@@ -91,14 +95,21 @@ Partial Class Form1
         'ConnectToolStripMenuItem
         '
         Me.ConnectToolStripMenuItem.Name = "ConnectToolStripMenuItem"
-        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ConnectToolStripMenuItem.Text = "Connect"
+        '
+        'DisconnectToolStripMenuItem
+        '
+        Me.DisconnectToolStripMenuItem.Enabled = False
+        Me.DisconnectToolStripMenuItem.Name = "DisconnectToolStripMenuItem"
+        Me.DisconnectToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DisconnectToolStripMenuItem.Text = "Disconnect"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
         Me.ExitToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "E&xit"
         '
         'HelpToolStripMenuItem
@@ -114,6 +125,11 @@ Partial Class Form1
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(149, 6)
         '
         'Form1
         '
@@ -145,5 +161,7 @@ Partial Class Form1
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ConnectToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DisconnectToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripSeparator
 
 End Class
