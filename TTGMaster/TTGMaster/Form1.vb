@@ -27,11 +27,20 @@ Public Class Form1
         Form2.Show()
     End Sub
 
-    Public Sub goConnect(ByVal inName As String)
-        readData = "Conected to Chat Server ..."
+    Public Sub goConnect(ByVal inName As String, ByVal IPAddress As String, ByVal portNumber As Integer)
+        readData = "Connected to Chat Server ..."
         msg()
-        clientSocket.Connect("127.0.0.1", 8888)
-        serverStream = clientSocket.GetStream()
+        Try
+            clientSocket.Connect(IPAddress, portNumber)
+            serverStream = clientSocket.GetStream()
+        Catch ex As Exception
+            Form2.Show()
+            Form2.Focus()
+            Form2.CouldNotConnect.Visible = True
+            Return
+        End Try
+        Form2.CouldNotConnect.Visible = False
+
 
         Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes(inName + "$")
         serverStream.Write(outStream, 0, outStream.Length)
