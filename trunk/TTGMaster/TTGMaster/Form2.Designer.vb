@@ -24,30 +24,31 @@ Partial Class Form2
     Private Sub InitializeComponent()
         Me.JoinGroup = New System.Windows.Forms.GroupBox
         Me.Label3 = New System.Windows.Forms.Label
-        Me.TextBox3 = New System.Windows.Forms.TextBox
+        Me.IPAddressBox = New System.Windows.Forms.TextBox
         Me.HostRadio = New System.Windows.Forms.RadioButton
         Me.JoinRadio = New System.Windows.Forms.RadioButton
         Me.Label1 = New System.Windows.Forms.Label
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
+        Me.PortNumber = New System.Windows.Forms.NumericUpDown
         Me.Label4 = New System.Windows.Forms.Label
-        Me.GamePassword = New System.Windows.Forms.TextBox
         Me.Label2 = New System.Windows.Forms.Label
+        Me.GamePassword = New System.Windows.Forms.TextBox
         Me.UserName = New System.Windows.Forms.TextBox
         Me.HostGroup = New System.Windows.Forms.GroupBox
         Me.Label5 = New System.Windows.Forms.Label
-        Me.TextBox5 = New System.Windows.Forms.TextBox
+        Me.GameNameBox = New System.Windows.Forms.TextBox
         Me.ConnectButton = New System.Windows.Forms.Button
-        Me.PortNumber = New System.Windows.Forms.NumericUpDown
+        Me.CouldNotConnect = New System.Windows.Forms.Label
         Me.JoinGroup.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.HostGroup.SuspendLayout()
         CType(Me.PortNumber, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.HostGroup.SuspendLayout()
         Me.SuspendLayout()
         '
         'JoinGroup
         '
         Me.JoinGroup.Controls.Add(Me.Label3)
-        Me.JoinGroup.Controls.Add(Me.TextBox3)
+        Me.JoinGroup.Controls.Add(Me.IPAddressBox)
         Me.JoinGroup.Enabled = False
         Me.JoinGroup.Location = New System.Drawing.Point(179, 35)
         Me.JoinGroup.Name = "JoinGroup"
@@ -64,12 +65,12 @@ Partial Class Form2
         Me.Label3.TabIndex = 7
         Me.Label3.Text = "IP"
         '
-        'TextBox3
+        'IPAddressBox
         '
-        Me.TextBox3.Location = New System.Drawing.Point(6, 38)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(131, 20)
-        Me.TextBox3.TabIndex = 6
+        Me.IPAddressBox.Location = New System.Drawing.Point(6, 38)
+        Me.IPAddressBox.Name = "IPAddressBox"
+        Me.IPAddressBox.Size = New System.Drawing.Size(131, 20)
+        Me.IPAddressBox.TabIndex = 6
         '
         'HostRadio
         '
@@ -116,6 +117,14 @@ Partial Class Form2
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         '
+        'PortNumber
+        '
+        Me.PortNumber.Location = New System.Drawing.Point(113, 46)
+        Me.PortNumber.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
+        Me.PortNumber.Name = "PortNumber"
+        Me.PortNumber.Size = New System.Drawing.Size(91, 20)
+        Me.PortNumber.TabIndex = 8
+        '
         'Label4
         '
         Me.Label4.AutoSize = True
@@ -125,13 +134,6 @@ Partial Class Form2
         Me.Label4.TabIndex = 7
         Me.Label4.Text = "Password (Optional)"
         '
-        'GamePassword
-        '
-        Me.GamePassword.Location = New System.Drawing.Point(113, 71)
-        Me.GamePassword.Name = "GamePassword"
-        Me.GamePassword.Size = New System.Drawing.Size(191, 20)
-        Me.GamePassword.TabIndex = 6
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -140,6 +142,13 @@ Partial Class Form2
         Me.Label2.Size = New System.Drawing.Size(60, 13)
         Me.Label2.TabIndex = 5
         Me.Label2.Text = "User Name"
+        '
+        'GamePassword
+        '
+        Me.GamePassword.Location = New System.Drawing.Point(113, 71)
+        Me.GamePassword.Name = "GamePassword"
+        Me.GamePassword.Size = New System.Drawing.Size(191, 20)
+        Me.GamePassword.TabIndex = 6
         '
         'UserName
         '
@@ -151,7 +160,7 @@ Partial Class Form2
         'HostGroup
         '
         Me.HostGroup.Controls.Add(Me.Label5)
-        Me.HostGroup.Controls.Add(Me.TextBox5)
+        Me.HostGroup.Controls.Add(Me.GameNameBox)
         Me.HostGroup.Enabled = False
         Me.HostGroup.Location = New System.Drawing.Point(12, 35)
         Me.HostGroup.Name = "HostGroup"
@@ -168,12 +177,12 @@ Partial Class Form2
         Me.Label5.TabIndex = 7
         Me.Label5.Text = "Game Name"
         '
-        'TextBox5
+        'GameNameBox
         '
-        Me.TextBox5.Location = New System.Drawing.Point(6, 38)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(131, 20)
-        Me.TextBox5.TabIndex = 6
+        Me.GameNameBox.Location = New System.Drawing.Point(6, 38)
+        Me.GameNameBox.Name = "GameNameBox"
+        Me.GameNameBox.Size = New System.Drawing.Size(131, 20)
+        Me.GameNameBox.TabIndex = 6
         '
         'ConnectButton
         '
@@ -185,19 +194,23 @@ Partial Class Form2
         Me.ConnectButton.Text = "Connect"
         Me.ConnectButton.UseVisualStyleBackColor = True
         '
-        'PortNumber
+        'CouldNotConnect
         '
-        Me.PortNumber.Location = New System.Drawing.Point(113, 46)
-        Me.PortNumber.Maximum = New Decimal(New Integer() {99999, 0, 0, 0})
-        Me.PortNumber.Name = "PortNumber"
-        Me.PortNumber.Size = New System.Drawing.Size(91, 20)
-        Me.PortNumber.TabIndex = 8
+        Me.CouldNotConnect.AutoSize = True
+        Me.CouldNotConnect.ForeColor = System.Drawing.Color.Red
+        Me.CouldNotConnect.Location = New System.Drawing.Point(138, 230)
+        Me.CouldNotConnect.Name = "CouldNotConnect"
+        Me.CouldNotConnect.Size = New System.Drawing.Size(103, 13)
+        Me.CouldNotConnect.TabIndex = 10
+        Me.CouldNotConnect.Text = "Could not connect..."
+        Me.CouldNotConnect.Visible = False
         '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(334, 264)
+        Me.Controls.Add(Me.CouldNotConnect)
         Me.Controls.Add(Me.ConnectButton)
         Me.Controls.Add(Me.HostGroup)
         Me.Controls.Add(Me.GroupBox2)
@@ -213,9 +226,9 @@ Partial Class Form2
         Me.JoinGroup.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        CType(Me.PortNumber, System.ComponentModel.ISupportInitialize).EndInit()
         Me.HostGroup.ResumeLayout(False)
         Me.HostGroup.PerformLayout()
-        CType(Me.PortNumber, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -226,14 +239,15 @@ Partial Class Form2
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents IPAddressBox As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents GamePassword As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents UserName As System.Windows.Forms.TextBox
     Friend WithEvents HostGroup As System.Windows.Forms.GroupBox
     Friend WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
+    Friend WithEvents GameNameBox As System.Windows.Forms.TextBox
     Friend WithEvents ConnectButton As System.Windows.Forms.Button
     Friend WithEvents PortNumber As System.Windows.Forms.NumericUpDown
+    Friend WithEvents CouldNotConnect As System.Windows.Forms.Label
 End Class

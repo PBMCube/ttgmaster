@@ -19,22 +19,22 @@ Public Class Form2
         Dim n As String = UserName.Text.ToString
 
         If JoinRadio.Checked Then
-            joinGame(n)
+            joinGame(n, IPAddressBox.Text.ToString, PortNumber.Value)
         Else
-            hostGame()
-            joinGame(n)
+            hostGame(PortNumber.Value)
+            joinGame(n, "127.0.0.1", PortNumber.Value)
         End If
     End Sub
 
-    Private Sub hostGame()
+    Private Sub hostGame(ByVal portNumber As Integer)
         Form3.Show()
-        Form3.go()
+        Form3.go(PortNumber)
         Me.Close()
         Form1.Focus()
     End Sub
 
-    Private Sub joinGame(ByVal inName As String)
-        Form1.goConnect(inName)
+    Private Sub joinGame(ByVal inName As String, ByVal IPAddress As String, ByVal portNumber As Integer)
+        Form1.goConnect(inName, IPAddress, portNumber)
     End Sub
 
     Private Sub UserName_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UserName.TextChanged

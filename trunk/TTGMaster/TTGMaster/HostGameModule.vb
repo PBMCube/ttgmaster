@@ -2,8 +2,8 @@
 Imports System.Text
 Module HostGameModule
     Dim clientsList As New Hashtable
-    Sub Main()
-        Dim serverSocket As New TcpListener(8888)
+    Sub Main(ByVal portNumber As Integer)
+        Dim serverSocket As New TcpListener(portNumber)
         Dim clientSocket As TcpClient
         Dim counter As Integer
 
