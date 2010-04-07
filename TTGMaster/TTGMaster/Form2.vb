@@ -3,15 +3,27 @@ Imports System.Text
 
 Public Class Form2
 
+    Private Sub GetIPAddress()
+        Dim strHostName As String
+        Dim strIPAddress As String
+        strHostName = System.Net.Dns.GetHostName()
+        strIPAddress = System.Net.Dns.GetHostByName(strHostName).AddressList(0).ToString()
+        IPAddressBox.Text = strIPAddress
+    End Sub
+
     Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HostRadio.CheckedChanged
         HostGroup.Enabled = True
         JoinGroup.Enabled = False
+        GetIPAddress()
+        IPAddressBox.Enabled = False
         checkForEnable()
     End Sub
 
     Private Sub RadioButton2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles JoinRadio.CheckedChanged
         HostGroup.Enabled = False
         JoinGroup.Enabled = True
+        IPAddressBox.Enabled = True
+        IPAddressBox.Text = ""
         checkForEnable()
     End Sub
 
@@ -28,7 +40,7 @@ Public Class Form2
 
     Private Sub hostGame(ByVal portNumber As Integer)
         Form3.Show()
-        Form3.go(PortNumber)
+        Form3.go(portNumber)
         Me.Close()
         Form1.Focus()
     End Sub
@@ -52,4 +64,5 @@ Public Class Form2
             ConnectButton.Enabled = False
         End If
     End Sub
+
 End Class
