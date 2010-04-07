@@ -1,0 +1,42 @@
+#summary Goes through a step by step process of creating a game.
+
+
+
+= Creating a Game =
+
+http://i43.tinypic.com/2ephlir.jpg
+
+Start by clicking on *File* -> *Connect*.  This will bring up a box where you can choose to Host Game or Connect to Game. Choose the *Host Game* option.
+
+http://i41.tinypic.com/15i3fjl.jpg
+
+The *Game Name* option is the name you would like your game called. 
+
+*User Name* is the name which you would like to be referred to by.
+
+*Port* number is the port you want people to connect through. This is important,
+make sure to give this value to those you want to join, as they will need it to connect to your game.
+
+*Password* is optional. Will allow only those that know the password to connect to your game.
+
+Once all needed information is given, finish creating your game by clicking the *Connect* button.
+
+= Joining a Game =
+
+Start by ensuring that the host has already created a game, and obtain the following information from them: *IP address* to connect to, *Port number* to connect with, and *password* if used.
+
+http://i43.tinypic.com/2ephlir.jpg
+
+Start by clicking on *File* -> *Connect*.  This will bring up a box where you can choose to Host Game or Connect to Game. Choose the *Connect to Game* option.
+
+http://i44.tinypic.com/2nvqer.jpg
+
+The *IP* option specifies which IP address to connect to. Obtain this from the game's host and place that value here. It is required to join the game.
+
+*User Name* is the name which you would like to be referred to by.
+
+*Port* number is the port you connect to the host through. Obtain this from the host as well, it is also required.
+
+*Password* is optional. If the host set a password you will need this to join the game, otherwise leave it blank.
+
+Once all needed information is given, finish joining the game by clicking the *Connect* button.
