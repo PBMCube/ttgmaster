@@ -1,6 +1,10 @@
 #summary Goes through a step by step process of creating a game.
 
+TTGMaster allows multiple users to connect to one host and play a game together. In order to do this one player must act as the host and create the game so that others may join.
 
+= You Will Need =
+
+One player to host the game. All players need to have a connection to the internet. The host will also need several images to display as the game board and game pieces.
 
 = Creating a Game =
 
@@ -21,6 +25,8 @@ make sure to give this value to those you want to join, as they will need it to 
 
 Once all needed information is given, finish creating your game by clicking the *Connect* button.
 
+*Troubleshooting* - If you receive an error message in red "Could not connect..." it may be that you have chosen an invalid or already in use Port value. Try using another Port.
+
 = Joining a Game =
 
 Start by ensuring that the host has already created a game, and obtain the following information from them: *IP address* to connect to, *Port number* to connect with, and *password* if used.
@@ -39,4 +45,18 @@ The *IP* option specifies which IP address to connect to. Obtain this from the g
 
 *Password* is optional. If the host set a password you will need this to join the game, otherwise leave it blank.
 
-Once all needed information is given, finish joining the game by clicking the *Connect* button.
+Once all needed information is given, join the game by clicking the *Connect* button.
+
+= Loading a Board =
+
+This can be done either by clicking *Game* -> *Load Board* or by pressing ctrl+b. 
+
+A windows explorer window will pop up and allow you to select which image to use as the board.
+
+The image selected will act as the board and remain as a background for all players.
+
+= Adding a Piece to your Game =
+
+Start by selecting *Game* -> *Add Piece* or by pressing ctrl+p.
+
+A Windows explorer window will pop up and allow you to select which image to use as a piece. Once your image file is selected click open and that image will be added to the board as a movable piece.
