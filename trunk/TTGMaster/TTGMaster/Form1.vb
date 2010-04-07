@@ -136,15 +136,25 @@ Public Class Form1
     End Sub
 
     Private Sub AddPieceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddPieceToolStripMenuItem.Click
-        ImageDialog.ShowDialog()
+        addNewPiece()
+    End Sub
 
+    Private Sub addNewPiece()
+        ImageDialog.ShowDialog()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes(ImageDialog.FileName + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+        ChatInputBox.Text = ""
+    End Sub
+
+    Private Sub createNewPiece(ByVal piecefile As String)
         Dim PB As New PictureBox
         With PB
             .Name = "PiecePic" + pieceCount.ToString
             .SizeMode = PictureBoxSizeMode.AutoSize
             .BorderStyle = BorderStyle.FixedSingle
             .Location = New System.Drawing.Point(50, 50)
-            .ImageLocation = ImageDialog.FileName
+            .ImageLocation = piecefile
             '  Note you can set more of the PicBox's Properties here
         End With
 
@@ -156,4 +166,5 @@ Public Class Form1
         AddHandler PB.MouseDown, AddressOf PieceMouseDown
         AddHandler PB.MouseMove, AddressOf PieceDrag
     End Sub
+
 End Class
