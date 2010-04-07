@@ -11,6 +11,13 @@ Public Class Form1
     Dim ctThread As Threading.Thread
     Dim endThread As Boolean = False
 
+    Dim dragX As Integer = 0
+    Dim dragY As Integer = 0
+    Dim dragged As Control
+
+    Dim pieceCount = 0
+    Dim pieces As List(Of Control)
+
 
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
@@ -106,5 +113,47 @@ Public Class Form1
             endThread = True
             MsgBox("Assumably aborted...", MsgBoxStyle.Exclamation)
         End If
+    End Sub
+
+    Private Sub PieceMouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        dragX = e.X
+        dragY = e.Y
+        dragged = sender
+    End Sub
+
+
+    Private Sub PieceDrag(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        If (e.Button = MouseButtons.Left) Then
+            dragged.Left += (e.X - dragX)
+            dragged.Top += (e.Y - dragY)
+        End If
+    End Sub
+
+    Private Sub LoadBoardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadBoardToolStripMenuItem.Click
+        ImageDialog.ShowDialog()
+        BoardImage.ImageLocation = ImageDialog.FileName
+
+    End Sub
+
+    Private Sub AddPieceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddPieceToolStripMenuItem.Click
+        ImageDialog.ShowDialog()
+
+        Dim PB As New PictureBox
+        With PB
+            .Name = "PiecePic" + pieceCount.ToString
+            .SizeMode = PictureBoxSizeMode.AutoSize
+            .BorderStyle = BorderStyle.FixedSingle
+            .Location = New System.Drawing.Point(50, 50)
+            .ImageLocation = ImageDialog.FileName
+            '  Note you can set more of the PicBox's Properties here
+        End With
+
+        '  This is the line that sometimes catches people out!
+        PlayArea.Controls.Add(PB)
+        BoardImage.SendToBack()
+
+        '  Wire this control up to an appropriate event handler
+        AddHandler PB.MouseDown, AddressOf PieceMouseDown
+        AddHandler PB.MouseMove, AddressOf PieceDrag
     End Sub
 End Class
