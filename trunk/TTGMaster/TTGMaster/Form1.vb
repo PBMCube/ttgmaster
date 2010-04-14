@@ -92,6 +92,17 @@ Public Class Form1
                 changeBackground(bg)
                 actionText = True
             ElseIf String.Compare(readData(0), "*") = 0 Then
+                Try
+                    Dim splitS As String() = (readData.Substring(1)).Split("*")
+                    Dim pieceNum As Integer = Convert.ToInt32(splitS(0))
+                    Dim xPos As Integer = Convert.ToInt32(splitS(1))
+                    Dim yPos As Integer = Convert.ToInt32(splitS(2))
+                    Dim pieceArray As Control() = PlayArea.Controls.Find("PiecePic" + pieceNum.ToString(), True)
+                    Dim thePiece = pieceArray(0)
+                    thePiece.Left = xPos
+                    thePiece.Top = yPos
+                Catch ex As Exception
+                End Try
                 actionText = True
             End If
 
