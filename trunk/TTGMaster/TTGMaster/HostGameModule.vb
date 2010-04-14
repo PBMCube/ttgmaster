@@ -1,5 +1,6 @@
 ﻿Imports System.Net.Sockets
 Imports System.Text
+
 Module HostGameModule
     Dim clientsList As New Hashtable
     Sub Main(ByVal portNumber As Integer)
@@ -55,7 +56,11 @@ Module HostGameModule
             Dim broadcastBytes As [Byte]()
 
             If flag = True Then
-                broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
+                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Then
+                    broadcastBytes = Encoding.ASCII.GetBytes(msg)
+                Else
+                    broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
+                End If
             Else
                 broadcastBytes = Encoding.ASCII.GetBytes(msg)
             End If
@@ -88,8 +93,9 @@ Module HostGameModule
             Dim serverResponse As String
             Dim rCount As String
             requestCount = 0
+            Dim checker As Boolean = True
 
-            While (True)
+            While (checker)
                 Try
                     requestCount = requestCount + 1
                     Dim networkStream As NetworkStream = _
@@ -103,7 +109,7 @@ Module HostGameModule
 
                     broadcast(dataFromClient, clNo, True)
                 Catch ex As Exception
-                    MsgBox(ex.ToString)
+                    checker = False
                 End Try
             End While
         End Sub

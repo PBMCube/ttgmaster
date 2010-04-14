@@ -31,8 +31,10 @@ Public Class Form2
         Dim n As String = UserName.Text.ToString
 
         If JoinRadio.Checked Then
+            Form1.setIsHost(False)
             joinGame(n, IPAddressBox.Text.ToString, PortNumber.Value)
         Else
+            Form1.setIsHost(True)
             hostGame(PortNumber.Value)
             joinGame(n, "127.0.0.1", PortNumber.Value)
         End If
