@@ -212,10 +212,8 @@ Public Class Form1
         With PB
             .Name = "PiecePic" + pieceCount.ToString
             .SizeMode = PictureBoxSizeMode.AutoSize
-            .BorderStyle = BorderStyle.FixedSingle
             .Location = New System.Drawing.Point(50, 50)
             .ImageLocation = piecefile
-            '  Note you can set more of the PicBox's Properties here
         End With
         pieceCount += 1
 
