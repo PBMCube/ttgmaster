@@ -33,15 +33,15 @@ Partial Class Form1
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.GameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.LoadBoardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AddPieceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.LoadBoardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ShowActionTextToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.PlayArea = New System.Windows.Forms.GroupBox
         Me.BoardImage = New System.Windows.Forms.PictureBox
         Me.ImageDialog = New System.Windows.Forms.OpenFileDialog
-        Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.ShowActionTextToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.PlayArea.SuspendLayout()
         CType(Me.BoardImage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -135,6 +135,14 @@ Partial Class Form1
         Me.GameToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
         Me.GameToolStripMenuItem.Text = "&Game"
         '
+        'AddPieceToolStripMenuItem
+        '
+        Me.AddPieceToolStripMenuItem.Enabled = False
+        Me.AddPieceToolStripMenuItem.Name = "AddPieceToolStripMenuItem"
+        Me.AddPieceToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
+        Me.AddPieceToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.AddPieceToolStripMenuItem.Text = "Add &Piece"
+        '
         'LoadBoardToolStripMenuItem
         '
         Me.LoadBoardToolStripMenuItem.Enabled = False
@@ -143,13 +151,19 @@ Partial Class Form1
         Me.LoadBoardToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.LoadBoardToolStripMenuItem.Text = "Load &Board"
         '
-        'AddPieceToolStripMenuItem
+        'ViewToolStripMenuItem
         '
-        Me.AddPieceToolStripMenuItem.Enabled = False
-        Me.AddPieceToolStripMenuItem.Name = "AddPieceToolStripMenuItem"
-        Me.AddPieceToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.P), System.Windows.Forms.Keys)
-        Me.AddPieceToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.AddPieceToolStripMenuItem.Text = "Add &Piece"
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowActionTextToolStripMenuItem})
+        Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
+        Me.ViewToolStripMenuItem.Text = "View"
+        '
+        'ShowActionTextToolStripMenuItem
+        '
+        Me.ShowActionTextToolStripMenuItem.CheckOnClick = True
+        Me.ShowActionTextToolStripMenuItem.Name = "ShowActionTextToolStripMenuItem"
+        Me.ShowActionTextToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
+        Me.ShowActionTextToolStripMenuItem.Text = "Show Action Text"
         '
         'HelpToolStripMenuItem
         '
@@ -162,7 +176,7 @@ Partial Class Form1
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'PlayArea
@@ -185,20 +199,6 @@ Partial Class Form1
         'ImageDialog
         '
         Me.ImageDialog.FileName = "OpenFileDialog1"
-        '
-        'ViewToolStripMenuItem
-        '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowActionTextToolStripMenuItem})
-        Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-        Me.ViewToolStripMenuItem.Text = "View"
-        '
-        'ShowActionTextToolStripMenuItem
-        '
-        Me.ShowActionTextToolStripMenuItem.CheckOnClick = True
-        Me.ShowActionTextToolStripMenuItem.Name = "ShowActionTextToolStripMenuItem"
-        Me.ShowActionTextToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
-        Me.ShowActionTextToolStripMenuItem.Text = "Show Action Text"
         '
         'Form1
         '

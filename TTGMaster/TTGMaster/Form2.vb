@@ -3,19 +3,45 @@ Imports System.Text
 
 Public Class Form2
 
-    Private Sub GetIPAddress()
+    Private Function GetIPAddress() As String
         Dim strHostName As String
         Dim strIPAddress As String
         strHostName = System.Net.Dns.GetHostName()
-        strIPAddress = System.Net.Dns.GetHostByName(strHostName).AddressList(0).ToString()
-        IPAddressBox.Text = strIPAddress
-    End Sub
+        Dim i As Integer
+        Dim myBound As Integer = System.Net.Dns.GetHostByName(strHostName).AddressList.Length() - 1
+        For i = 0 To myBound
+            strIPAddress = System.Net.Dns.GetHostByName(strHostName).AddressList(i).ToString()
+            Dim strIPseg As String() = strIPAddress.Split(".")
+            Dim seg1 As Integer = Convert.ToInt32(strIPseg(0))
+            Dim seg2 As Integer = Convert.ToInt32(strIPseg(1))
+
+            If seg1 = 0 Then
+                Continue For
+            ElseIf seg1 = 10 Then
+                Continue For
+            ElseIf seg1 = 169 And seg2 = 254 Then
+                Continue For
+            ElseIf seg1 = 192 And seg2 = 168 Then
+                Continue For
+            Else
+                Exit For
+            End If
+        Next i
+
+        If i > myBound Then
+            Return "ERROR"
+        Else
+            Return strIPAddress
+        End If
+        Return strIPAddress
+    End Function
 
     Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HostRadio.CheckedChanged
         HostGroup.Enabled = True
         JoinGroup.Enabled = False
-        GetIPAddress()
+        IPAddressBox.Text = GetIPAddress()
         IPAddressBox.Enabled = False
+        GameNameBox.Enabled = True
         checkForEnable()
     End Sub
 
@@ -24,6 +50,7 @@ Public Class Form2
         JoinGroup.Enabled = True
         IPAddressBox.Enabled = True
         IPAddressBox.Text = ""
+        GameNameBox.Enabled = False
         checkForEnable()
     End Sub
 

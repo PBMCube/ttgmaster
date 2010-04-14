@@ -222,6 +222,7 @@ Partial Class Form2
         Me.Name = "Form2"
         Me.ShowInTaskbar = False
         Me.Text = "Connnect"
+        Me.TopMost = True
         Me.JoinGroup.ResumeLayout(False)
         Me.JoinGroup.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
