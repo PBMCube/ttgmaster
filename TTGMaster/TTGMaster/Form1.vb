@@ -1,5 +1,6 @@
 ﻿Imports System.Net.Sockets
 Imports System.Text
+Imports System.IO
 
 
 Public Class Form1
@@ -10,6 +11,7 @@ Public Class Form1
     Dim readData As String
     Dim ctThread As Threading.Thread
     Dim endThread As Boolean = False
+    Dim isHost As Boolean = False
 
     Dim dragX As Integer = 0
     Dim dragY As Integer = 0
@@ -54,13 +56,14 @@ Public Class Form1
         serverStream.Flush()
 
         endThread = False
-        ctThread = New Threading.Thread(AddressOf getMessage)
+        ctThread = New Threading.Thread(AddressOf Me.getMessage)
         ctThread.Start()
 
         ChatInputBox.Enabled = True
-        ChatSendButton.Enabled = True
         ConnectToolStripMenuItem.Enabled = False
         DisconnectToolStripMenuItem.Enabled = True
+        AddPieceToolStripMenuItem.Enabled = True
+        LoadBoardToolStripMenuItem.Enabled = True
 
     End Sub
 
@@ -69,40 +72,59 @@ Public Class Form1
         serverStream.Write(outStream, 0, outStream.Length)
         serverStream.Flush()
         ChatInputBox.Text = ""
+        ChatSendButton.Enabled = False
     End Sub
 
     Sub msg()
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf msg))
         Else
-            ChatBox.Text = ChatBox.Text + Environment.NewLine + " >> " + readData
+            Dim actionText As Boolean = False
+
+            If String.Compare(readData(0), "@") = 0 Then
+                Dim newPiece As String
+                newPiece = Path.Combine(Directory.GetCurrentDirectory.ToString(), readData.Substring(1).Replace(vbNewLine, "").Replace(vbNullChar, ""))
+                createNewPiece(newPiece)
+                actionText = True
+            ElseIf String.Compare(readData(0), "#") = 0 Then
+                Dim bg As String
+                bg = Path.Combine(Directory.GetCurrentDirectory.ToString(), readData.Substring(1).Replace(vbNewLine, "").Replace(vbNullChar, ""))
+                changeBackground(bg)
+                actionText = True
+            ElseIf String.Compare(readData(0), "*") = 0 Then
+                actionText = True
+            End If
+
+            If (actionText = False) Or (actionText And ShowActionTextToolStripMenuItem.Checked) Then
+                ChatBox.Text = ChatBox.Text + Environment.NewLine + " >> " + readData
+                ChatBox.SelectionStart = ChatBox.TextLength
+                ChatBox.ScrollToCaret()
+            End If
         End If
     End Sub
 
     Private Sub getMessage()
-        Dim keepGoing As Boolean = True
-        While keepGoing
+        While endThread = False
             serverStream = clientSocket.GetStream()
             Dim buffSize As Integer
             Dim inStream(10024) As Byte
             buffSize = clientSocket.ReceiveBufferSize
-            serverStream.Read(inStream, 0, buffSize)
-            Dim returndata As String = _
-            System.Text.Encoding.ASCII.GetString(inStream)
-            readData = "" + returndata
-            msg()
-            If endThread Then
-                keepGoing = False
-            End If
+            Try
+                serverStream.Read(inStream, 0, buffSize)
+                Dim returndata As String = _
+                System.Text.Encoding.ASCII.GetString(inStream)
+                readData = "" + returndata
+                msg()
+            Catch
+                endThread = True
+            End Try
         End While
-        clientSocket.Close()
-        MsgBox("Disconnection Successful!", MsgBoxStyle.Information)
     End Sub
 
 
 
     Private Sub ChatInputBox_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles ChatInputBox.KeyDown
-        If e.KeyCode = Keys.Enter Then
+        If e.KeyCode = Keys.Enter And ChatSendButton.Enabled Then
             ChatSendButton_Click(Me, EventArgs.Empty)
         End If
 
@@ -110,8 +132,22 @@ Public Class Form1
 
     Private Sub DisconnectToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DisconnectToolStripMenuItem.Click
         If ctThread.IsAlive Then
-            endThread = True
+            Me.clientSocket.Close()
+            While ctThread.IsAlive
+
+            End While
             MsgBox("Assumably aborted...", MsgBoxStyle.Exclamation)
+        End If
+
+        ChatInputBox.Enabled = False
+        ChatSendButton.Enabled = False
+        ConnectToolStripMenuItem.Enabled = True
+        DisconnectToolStripMenuItem.Enabled = False
+        AddPieceToolStripMenuItem.Enabled = False
+        LoadBoardToolStripMenuItem.Enabled = False
+
+        If isHost Then
+            Form3.stopit()
         End If
     End Sub
 
@@ -129,10 +165,24 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub PieceRelease(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        If (e.Button = MouseButtons.Left) Then
+            Dim pieceNum As Integer
+            Try
+                pieceNum = Convert.ToInt32(dragged.Name.Substring(8))
+                Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("*" + pieceNum.ToString + "*" + dragged.Left.ToString + "*" + dragged.Top.ToString + "$")
+                serverStream.Write(outStream, 0, outStream.Length)
+                serverStream.Flush()
+            Catch ex As Exception
+            End Try
+        End If
+    End Sub
+
     Private Sub LoadBoardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadBoardToolStripMenuItem.Click
         ImageDialog.ShowDialog()
-        BoardImage.ImageLocation = ImageDialog.FileName
-
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("#" + ImageDialog.SafeFileName + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
     End Sub
 
     Private Sub AddPieceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddPieceToolStripMenuItem.Click
@@ -141,10 +191,9 @@ Public Class Form1
 
     Private Sub addNewPiece()
         ImageDialog.ShowDialog()
-        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes(ImageDialog.FileName + "$")
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("@" + ImageDialog.SafeFileName + "$")
         serverStream.Write(outStream, 0, outStream.Length)
         serverStream.Flush()
-        ChatInputBox.Text = ""
     End Sub
 
     Private Sub createNewPiece(ByVal piecefile As String)
@@ -157,6 +206,7 @@ Public Class Form1
             .ImageLocation = piecefile
             '  Note you can set more of the PicBox's Properties here
         End With
+        pieceCount += 1
 
         '  This is the line that sometimes catches people out!
         PlayArea.Controls.Add(PB)
@@ -165,6 +215,22 @@ Public Class Form1
         '  Wire this control up to an appropriate event handler
         AddHandler PB.MouseDown, AddressOf PieceMouseDown
         AddHandler PB.MouseMove, AddressOf PieceDrag
+        AddHandler PB.MouseUp, AddressOf PieceRelease
     End Sub
 
+    Private Sub changeBackground(ByVal bgfile As String)
+        BoardImage.ImageLocation = bgfile
+    End Sub
+
+    Public Sub setIsHost(ByVal v)
+        isHost = v
+    End Sub
+
+    Private Sub ChatInputBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChatInputBox.TextChanged
+        If ChatInputBox.Text.Length > 0 Then
+            ChatSendButton.Enabled = True
+        Else
+            ChatSendButton.Enabled = False
+        End If
+    End Sub
 End Class
