@@ -3,9 +3,9 @@ Imports System.Text
 
 Public Class Form2
 
-    Private Function GetIPAddress() As String
+    Public Function GetIPAddress() As String
         Dim strHostName As String
-        Dim strIPAddress As String
+        Dim strIPAddress As String = ""
         strHostName = System.Net.Dns.GetHostName()
         Dim i As Integer
         Dim myBound As Integer = System.Net.Dns.GetHostByName(strHostName).AddressList.Length() - 1
@@ -30,8 +30,6 @@ Public Class Form2
 
         If i > myBound Then
             Return "ERROR"
-        Else
-            Return strIPAddress
         End If
         Return strIPAddress
     End Function
