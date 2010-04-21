@@ -58,7 +58,7 @@ Module HostGameModule
             If flag = True Then
                 If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
-                ElseIf (String.Compare(msg.Substring(0, 4), "roll") = 0) Then
+                ElseIf isDiceCommand(msg) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(rollDie(msg.Substring(5)))
                 Else
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
@@ -72,10 +72,22 @@ Module HostGameModule
         Next
     End Sub
 
-    Private Function rollDie(ByVal msg As String)
-        Dim splitS As String() = msg.Split("d")
+    Private Function isDiceCommand(ByVal inMsg As String)
+        If inMsg.Length <= 4 Then
+            Return False
+        End If
+
+        If Not (String.Compare(inMsg.Substring(0, 4), "roll") = 0) Then
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Private Function rollDie(ByVal inMsg As String)
+        Dim splitS As String() = inMsg.Split("d")
         If Not splitS.Length = 2 Then
-            Return msg
+            Return "Invalid Roll"
         End If
 
         Dim num As Integer = Convert.ToInt32(splitS(0))
@@ -83,7 +95,7 @@ Module HostGameModule
         Dim r As New Random(System.DateTime.Now.Millisecond)
 
         If (num < 1) Or (die < 2) Then
-            Return msg
+            Return "Invalid Roll"
         End If
 
         Dim result As Integer
@@ -95,7 +107,8 @@ Module HostGameModule
             total += result
         Next
 
-        Return "Rolled " + msg + ": " + total.ToString
+        Dim final As String = ("Rolled " + inMsg + ": " + total.ToString).ToString()
+        Return final
     End Function
 
     Public Class handleClinet
