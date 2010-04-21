@@ -24,7 +24,6 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.ChatInputBox = New System.Windows.Forms.TextBox
         Me.ChatSendButton = New System.Windows.Forms.Button
-        Me.PlayerList = New System.Windows.Forms.TextBox
         Me.ChatBox = New System.Windows.Forms.TextBox
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -37,12 +36,12 @@ Partial Class Form1
         Me.LoadBoardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ShowActionTextToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ShowMyIPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.PlayArea = New System.Windows.Forms.GroupBox
         Me.BoardImage = New System.Windows.Forms.PictureBox
         Me.ImageDialog = New System.Windows.Forms.OpenFileDialog
-        Me.ShowMyIPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.PlayArea.SuspendLayout()
         CType(Me.BoardImage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -51,9 +50,9 @@ Partial Class Form1
         'ChatInputBox
         '
         Me.ChatInputBox.Enabled = False
-        Me.ChatInputBox.Location = New System.Drawing.Point(194, 632)
+        Me.ChatInputBox.Location = New System.Drawing.Point(12, 632)
         Me.ChatInputBox.Name = "ChatInputBox"
-        Me.ChatInputBox.Size = New System.Drawing.Size(297, 20)
+        Me.ChatInputBox.Size = New System.Drawing.Size(479, 20)
         Me.ChatInputBox.TabIndex = 0
         '
         'ChatSendButton
@@ -66,24 +65,14 @@ Partial Class Form1
         Me.ChatSendButton.Text = "Send"
         Me.ChatSendButton.UseVisualStyleBackColor = True
         '
-        'PlayerList
-        '
-        Me.PlayerList.Location = New System.Drawing.Point(12, 451)
-        Me.PlayerList.Multiline = True
-        Me.PlayerList.Name = "PlayerList"
-        Me.PlayerList.ReadOnly = True
-        Me.PlayerList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.PlayerList.Size = New System.Drawing.Size(176, 201)
-        Me.PlayerList.TabIndex = 2
-        '
         'ChatBox
         '
-        Me.ChatBox.Location = New System.Drawing.Point(194, 451)
+        Me.ChatBox.Location = New System.Drawing.Point(12, 451)
         Me.ChatBox.Multiline = True
         Me.ChatBox.Name = "ChatBox"
         Me.ChatBox.ReadOnly = True
         Me.ChatBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.ChatBox.Size = New System.Drawing.Size(378, 173)
+        Me.ChatBox.Size = New System.Drawing.Size(560, 173)
         Me.ChatBox.TabIndex = 3
         '
         'MenuStrip1
@@ -166,6 +155,12 @@ Partial Class Form1
         Me.ShowActionTextToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
         Me.ShowActionTextToolStripMenuItem.Text = "Show Action Text"
         '
+        'ShowMyIPToolStripMenuItem
+        '
+        Me.ShowMyIPToolStripMenuItem.Name = "ShowMyIPToolStripMenuItem"
+        Me.ShowMyIPToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
+        Me.ShowMyIPToolStripMenuItem.Text = "Show My IP"
+        '
         'HelpToolStripMenuItem
         '
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem})
@@ -201,12 +196,6 @@ Partial Class Form1
         '
         Me.ImageDialog.FileName = "OpenFileDialog1"
         '
-        'ShowMyIPToolStripMenuItem
-        '
-        Me.ShowMyIPToolStripMenuItem.Name = "ShowMyIPToolStripMenuItem"
-        Me.ShowMyIPToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
-        Me.ShowMyIPToolStripMenuItem.Text = "Show My IP"
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -214,7 +203,6 @@ Partial Class Form1
         Me.ClientSize = New System.Drawing.Size(584, 664)
         Me.Controls.Add(Me.PlayArea)
         Me.Controls.Add(Me.ChatBox)
-        Me.Controls.Add(Me.PlayerList)
         Me.Controls.Add(Me.ChatSendButton)
         Me.Controls.Add(Me.ChatInputBox)
         Me.Controls.Add(Me.MenuStrip1)
@@ -232,7 +220,6 @@ Partial Class Form1
     End Sub
     Friend WithEvents ChatInputBox As System.Windows.Forms.TextBox
     Friend WithEvents ChatSendButton As System.Windows.Forms.Button
-    Friend WithEvents PlayerList As System.Windows.Forms.TextBox
     Friend WithEvents ChatBox As System.Windows.Forms.TextBox
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
