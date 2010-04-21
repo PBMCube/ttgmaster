@@ -42,6 +42,7 @@ Partial Class Form1
         Me.PlayArea = New System.Windows.Forms.GroupBox
         Me.BoardImage = New System.Windows.Forms.PictureBox
         Me.ImageDialog = New System.Windows.Forms.OpenFileDialog
+        Me.ShowMyIPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.PlayArea.SuspendLayout()
         CType(Me.BoardImage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -105,26 +106,26 @@ Partial Class Form1
         'ConnectToolStripMenuItem
         '
         Me.ConnectToolStripMenuItem.Name = "ConnectToolStripMenuItem"
-        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ConnectToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.ConnectToolStripMenuItem.Text = "Connect"
         '
         'DisconnectToolStripMenuItem
         '
         Me.DisconnectToolStripMenuItem.Enabled = False
         Me.DisconnectToolStripMenuItem.Name = "DisconnectToolStripMenuItem"
-        Me.DisconnectToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DisconnectToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.DisconnectToolStripMenuItem.Text = "Disconnect"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(130, 6)
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
         Me.ExitToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.X), System.Windows.Forms.Keys)
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.ExitToolStripMenuItem.Text = "E&xit"
         '
         'GameToolStripMenuItem
@@ -153,10 +154,10 @@ Partial Class Form1
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowActionTextToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowActionTextToolStripMenuItem, Me.ShowMyIPToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-        Me.ViewToolStripMenuItem.Text = "View"
+        Me.ViewToolStripMenuItem.Text = "&View"
         '
         'ShowActionTextToolStripMenuItem
         '
@@ -199,6 +200,12 @@ Partial Class Form1
         'ImageDialog
         '
         Me.ImageDialog.FileName = "OpenFileDialog1"
+        '
+        'ShowMyIPToolStripMenuItem
+        '
+        Me.ShowMyIPToolStripMenuItem.Name = "ShowMyIPToolStripMenuItem"
+        Me.ShowMyIPToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
+        Me.ShowMyIPToolStripMenuItem.Text = "Show My IP"
         '
         'Form1
         '
@@ -243,5 +250,6 @@ Partial Class Form1
     Friend WithEvents AddPieceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ViewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowActionTextToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ShowMyIPToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
