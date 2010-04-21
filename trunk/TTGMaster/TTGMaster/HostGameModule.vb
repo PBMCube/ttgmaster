@@ -28,9 +28,9 @@ Module HostGameModule
 
             clientsList(dataFromClient) = clientSocket
 
-            broadcast("Joined: " + dataFromClient, dataFromClient, False)
+            broadcast(dataFromClient + " Joined ", dataFromClient, False)
 
-            msg(dataFromClient + " joined the game")
+            msg(dataFromClient + " Joined chat room ")
             Dim client As New handleClinet
             client.startClient(clientSocket, dataFromClient, clientsList)
         End While
@@ -56,7 +56,7 @@ Module HostGameModule
             Dim broadcastBytes As [Byte]()
 
             If flag = True Then
-                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "^") = 0) Then
+                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
                 ElseIf (String.Compare(msg.Substring(0, 4), "roll") = 0) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(rollDie(msg.Substring(5)))
