@@ -28,9 +28,9 @@ Module HostGameModule
 
             clientsList(dataFromClient) = clientSocket
 
-            broadcast(dataFromClient + " Joined ", dataFromClient, False)
+            broadcast("Joined: " + dataFromClient, dataFromClient, False)
 
-            msg(dataFromClient + " Joined chat room ")
+            msg(dataFromClient + " joined the game")
             Dim client As New handleClinet
             client.startClient(clientSocket, dataFromClient, clientsList)
         End While
@@ -56,8 +56,10 @@ Module HostGameModule
             Dim broadcastBytes As [Byte]()
 
             If flag = True Then
-                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Then
+                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "^") = 0) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
+                ElseIf (String.Compare(msg.Substring(0, 4), "roll") = 0) Then
+                    broadcastBytes = Encoding.ASCII.GetBytes(rollDie(msg.Substring(5)))
                 Else
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
                 End If
@@ -69,6 +71,32 @@ Module HostGameModule
             broadcastStream.Flush()
         Next
     End Sub
+
+    Private Function rollDie(ByVal msg As String)
+        Dim splitS As String() = msg.Split("d")
+        If Not splitS.Length = 2 Then
+            Return msg
+        End If
+
+        Dim num As Integer = Convert.ToInt32(splitS(0))
+        Dim die As Integer = Convert.ToInt32(splitS(1))
+        Dim r As New Random(System.DateTime.Now.Millisecond)
+
+        If (num < 1) Or (die < 2) Then
+            Return msg
+        End If
+
+        Dim result As Integer
+        Dim total As Integer = 0
+        Dim i As Integer
+
+        For i = 1 To num
+            result = r.Next(1, die + 1)
+            total += result
+        Next
+
+        Return "Rolled " + msg + ": " + total.ToString
+    End Function
 
     Public Class handleClinet
         Dim clientSocket As TcpClient
