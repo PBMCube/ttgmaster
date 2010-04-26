@@ -35,7 +35,7 @@ Once all needed information is given, finish creating your game by clicking the 
 
 Start by ensuring that the host has already created a game, and obtain the following information from them: *IP address* to connect to, *Port number* to connect with, and *password* if used.
 
-http://i39.tinypic.com/15rjf6h.jpg
+http://i43.tinypic.com/v8pyqb.jpg
 
 Start by clicking on *File* -> *Connect*.  This will bring up a box where you can choose to Host Game or Connect to Game. Choose the *Connect to Game* option.
 
