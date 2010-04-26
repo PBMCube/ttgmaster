@@ -42,6 +42,7 @@ Partial Class Form1
         Me.PlayArea = New System.Windows.Forms.GroupBox
         Me.BoardImage = New System.Windows.Forms.PictureBox
         Me.ImageDialog = New System.Windows.Forms.OpenFileDialog
+        Me.AddDieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.PlayArea.SuspendLayout()
         CType(Me.BoardImage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -119,7 +120,7 @@ Partial Class Form1
         '
         'GameToolStripMenuItem
         '
-        Me.GameToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddPieceToolStripMenuItem, Me.LoadBoardToolStripMenuItem})
+        Me.GameToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddPieceToolStripMenuItem, Me.LoadBoardToolStripMenuItem, Me.AddDieToolStripMenuItem})
         Me.GameToolStripMenuItem.Name = "GameToolStripMenuItem"
         Me.GameToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.G), System.Windows.Forms.Keys)
         Me.GameToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
@@ -196,6 +197,12 @@ Partial Class Form1
         '
         Me.ImageDialog.FileName = "OpenFileDialog1"
         '
+        'AddDieToolStripMenuItem
+        '
+        Me.AddDieToolStripMenuItem.Name = "AddDieToolStripMenuItem"
+        Me.AddDieToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.AddDieToolStripMenuItem.Text = "Add &Die"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -238,5 +245,6 @@ Partial Class Form1
     Friend WithEvents ViewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowActionTextToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowMyIPToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents AddDieToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

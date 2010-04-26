@@ -29,7 +29,7 @@ Public Class Form2
         Next i
 
         If i > myBound Then
-            Return "ERROR"
+            Return "Error: may be behind a router"
         End If
         Return strIPAddress
     End Function

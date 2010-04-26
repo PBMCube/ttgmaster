@@ -84,7 +84,12 @@ Public Class Form1
             If String.Compare(readData(0), "@") = 0 Then
                 Dim newPiece As String
                 newPiece = Path.Combine(Directory.GetCurrentDirectory.ToString(), readData.Substring(1).Replace(vbNewLine, "").Replace(vbNullChar, ""))
-                createNewPiece(newPiece)
+                createNewPiece(newPiece, 0)
+                actionText = True
+            ElseIf String.Compare(readData(0), "&") = 0 Then
+                Dim newPiece As String
+                newPiece = Path.Combine(Directory.GetCurrentDirectory.ToString(), readData.Substring(3).Replace(vbNewLine, "").Replace(vbNullChar, ""))
+                createNewPiece(newPiece, Convert.ToInt32(readData.Substring(1, 2)))
                 actionText = True
             ElseIf String.Compare(readData(0), "#") = 0 Then
                 Dim bg As String
@@ -200,6 +205,13 @@ Public Class Form1
         addNewPiece()
     End Sub
 
+    Public Sub addNewDie(ByVal sides As String)
+        Dim imgFile As String = String.Concat("d", sides, ".png")
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("&" + sides + imgFile + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+    End Sub
+
     Private Sub addNewPiece()
         ImageDialog.ShowDialog()
         Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("@" + ImageDialog.SafeFileName + "$")
@@ -207,7 +219,7 @@ Public Class Form1
         serverStream.Flush()
     End Sub
 
-    Private Sub createNewPiece(ByVal piecefile As String)
+    Private Sub createNewPiece(ByVal piecefile As String, ByVal sides As Integer)
         Dim PB As New PictureBox
         With PB
             .Name = "PiecePic" + pieceCount.ToString
@@ -225,6 +237,63 @@ Public Class Form1
         AddHandler PB.MouseDown, AddressOf PieceMouseDown
         AddHandler PB.MouseMove, AddressOf PieceDrag
         AddHandler PB.MouseUp, AddressOf PieceRelease
+        If sides = 4 Then
+            AddHandler PB.DoubleClick, AddressOf rollDie4
+        ElseIf sides = 2 Then
+            AddHandler PB.DoubleClick, AddressOf rollDie2
+        ElseIf sides = 6 Then
+            AddHandler PB.DoubleClick, AddressOf rollDie6
+        ElseIf sides = 8 Then
+            AddHandler PB.DoubleClick, AddressOf rollDie8
+        ElseIf sides = 10 Then
+            AddHandler PB.DoubleClick, AddressOf rollDie10
+        ElseIf sides = 12 Then
+            AddHandler PB.DoubleClick, AddressOf rollDie12
+        ElseIf sides = 20 Then
+            AddHandler PB.DoubleClick, AddressOf rollDie20
+        End If
+    End Sub
+
+    Private Sub rollDie4()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("roll 1d4" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+    End Sub
+
+    Private Sub rollDie2()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("roll 1d2" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+    End Sub
+
+    Private Sub rollDie6()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("roll 1d6" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+    End Sub
+
+    Private Sub rollDie8()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("roll 1d8" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+    End Sub
+
+    Private Sub rollDie10()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("roll 1d10" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+    End Sub
+
+    Private Sub rollDie12()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("roll 1d12" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+    End Sub
+
+    Private Sub rollDie20()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("roll 1d20" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
     End Sub
 
     Private Sub changeBackground(ByVal bgfile As String)
@@ -248,4 +317,7 @@ Public Class Form1
         MessageBox.Show("IP Address: " & strIPAddress)
     End Sub
 
+    Private Sub AddDieToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddDieToolStripMenuItem.Click
+        Form4.Show()
+    End Sub
 End Class
