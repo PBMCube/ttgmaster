@@ -48,6 +48,10 @@ Module HostGameModule
 
     Private Sub broadcast(ByVal msg As String, _
     ByVal uName As String, ByVal flag As Boolean)
+        Dim diceRollMsg As String = "MissingNo."
+        If isDiceCommand(msg) Then
+            diceRollMsg = rollDie(msg.Substring(5))
+        End If
         Dim Item As DictionaryEntry
         For Each Item In clientsList
             Dim broadcastSocket As TcpClient
@@ -60,7 +64,7 @@ Module HostGameModule
                 If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
                 ElseIf isDiceCommand(msg) Then
-                    broadcastBytes = Encoding.ASCII.GetBytes(rollDie(msg.Substring(5)))
+                    broadcastBytes = Encoding.ASCII.GetBytes(diceRollMsg)
                 Else
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
                 End If
