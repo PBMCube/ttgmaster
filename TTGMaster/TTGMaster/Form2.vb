@@ -53,27 +53,31 @@ Public Class Form2
     End Sub
 
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
-        Dim n As String = UserName.Text.ToString
+        checkForEnable()
 
-        If JoinRadio.Checked Then
-            Form1.setIsHost(False)
-            joinGame(n, IPAddressBox.Text.ToString, PortNumber.Value)
-        Else
-            Form1.setIsHost(True)
-            hostGame(PortNumber.Value)
-            joinGame(n, "127.0.0.1", PortNumber.Value)
+        If ConnectButton.Enabled Then
+            Dim n As String = UserName.Text.ToString
+
+            If JoinRadio.Checked Then
+                Form1.setIsHost(False)
+                joinGame(n, IPAddressBox.Text.ToString, PortNumber.Value)
+            Else
+                Form1.setIsHost(True)
+                hostGame(PortNumber.Value)
+                joinGame(n, "127.0.0.1", PortNumber.Value)
+            End If
         End If
     End Sub
 
     Private Sub hostGame(ByVal portNumber As Integer)
         Form3.Show()
         Form3.go(portNumber)
-        Me.Close()
-        Form1.Focus()
     End Sub
 
     Private Sub joinGame(ByVal inName As String, ByVal IPAddress As String, ByVal portNumber As Integer)
         Form1.goConnect(inName, IPAddress, portNumber)
+        Me.Close()
+        Form1.Focus()
     End Sub
 
     Private Sub UserName_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UserName.TextChanged
@@ -85,11 +89,14 @@ Public Class Form2
     End Sub
 
     Private Sub checkForEnable()
-        If (UserName.Text.Length > 0) And ((HostRadio.Checked) Or (JoinRadio.Checked)) Then
+        If (UserName.Text.Length > 0) And ((HostRadio.Checked) Or (JoinRadio.Checked)) And (PortNumber.Value > 0) Then
             ConnectButton.Enabled = True
         Else
             ConnectButton.Enabled = False
         End If
     End Sub
 
+    Private Sub PortNumber_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PortNumber.ValueChanged
+        checkForEnable()
+    End Sub
 End Class
