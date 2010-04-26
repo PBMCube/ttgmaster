@@ -5,13 +5,14 @@ Imports System.IO
 
 Public Class Form1
 
-    Dim versionNum As String = "v0.1.0"
+    Dim versionNum As String = "v0.7.0"
     Dim clientSocket As New System.Net.Sockets.TcpClient()
     Dim serverStream As NetworkStream
     Dim readData As String
     Dim ctThread As Threading.Thread
     Dim endThread As Boolean = False
     Dim isHost As Boolean = False
+    Dim boardLocked As Boolean = False
 
     Dim dragX As Integer = 0
     Dim dragY As Integer = 0
@@ -64,6 +65,10 @@ Public Class Form1
         DisconnectToolStripMenuItem.Enabled = True
         AddPieceToolStripMenuItem.Enabled = True
         LoadBoardToolStripMenuItem.Enabled = True
+        AddDieToolStripMenuItem.Enabled = True
+        If isHost Then
+            LockBoardToolStripMenuItem.Enabled = True
+        End If
 
     End Sub
 
@@ -109,6 +114,26 @@ Public Class Form1
                 Catch ex As Exception
                 End Try
                 actionText = True
+            ElseIf (isDisposeCommand(readData)) Then
+                Try
+                    Dim pieceNumS = readData.Substring(8)
+                    Dim pieceNum As Integer = Convert.ToInt32(pieceNumS)
+                    Dim pieceArray As Control() = PlayArea.Controls.Find("PiecePic" + pieceNum.ToString(), True)
+                    Dim thePiece = pieceArray(0)
+                    thePiece.Dispose()
+                Catch ex As Exception
+                End Try
+                actionText = True
+            ElseIf (isLockCommand(readData)) Then
+                Try
+                    If (String.Compare(readData.Substring(0, 9), "lockboard") = 0) Then
+                        LockBoard()
+                    Else
+                        UnlockBoard()
+                    End If
+                Catch ex As Exception
+                End Try
+                actionText = True
             End If
 
             If (actionText = False) Or (actionText And ShowActionTextToolStripMenuItem.Checked) Then
@@ -118,6 +143,39 @@ Public Class Form1
             End If
         End If
     End Sub
+
+    Private Function isDisposeCommand(ByVal inMsg As String)
+        If inMsg.Length <= 8 Then
+            Return False
+        End If
+
+        If Not (String.Compare(inMsg.Substring(0, 8), "dispose ") = 0) Then
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Private Function isLockCommand(ByVal inMsg As String)
+        If inMsg.Length < 9 Then
+            Return False
+        End If
+
+        If (String.Compare(inMsg.Substring(0, 9), "lockboard") = 0) Then
+            Return True
+        End If
+
+        If inMsg.Length < 11 Then
+            Return False
+        End If
+
+        If (String.Compare(inMsg.Substring(0, 11), "unlockboard") = 0) Then
+            Return True
+        End If
+
+        Return False
+
+    End Function
 
     Private Sub getMessage()
         While endThread = False
@@ -161,6 +219,8 @@ Public Class Form1
         DisconnectToolStripMenuItem.Enabled = False
         AddPieceToolStripMenuItem.Enabled = False
         LoadBoardToolStripMenuItem.Enabled = False
+        AddDieToolStripMenuItem.Enabled = False
+        LockBoardToolStripMenuItem.Enabled = False
 
         If isHost Then
             Form3.stopit()
@@ -182,23 +242,27 @@ Public Class Form1
     End Sub
 
     Private Sub PieceRelease(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
-        If (e.Button = MouseButtons.Left) Then
-            Dim pieceNum As Integer
-            Try
-                pieceNum = Convert.ToInt32(dragged.Name.Substring(8))
-                Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("*" + pieceNum.ToString + "*" + dragged.Left.ToString + "*" + dragged.Top.ToString + "$")
-                serverStream.Write(outStream, 0, outStream.Length)
-                serverStream.Flush()
-            Catch ex As Exception
-            End Try
+        If Not (boardLocked And Not isHost) Then
+            If (e.Button = MouseButtons.Left) Then
+                Dim pieceNum As Integer
+                Try
+                    pieceNum = Convert.ToInt32(dragged.Name.Substring(8))
+                    Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("*" + pieceNum.ToString + "*" + dragged.Left.ToString + "*" + dragged.Top.ToString + "$")
+                    serverStream.Write(outStream, 0, outStream.Length)
+                    serverStream.Flush()
+                Catch ex As Exception
+                End Try
+            End If
         End If
     End Sub
 
     Private Sub LoadBoardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadBoardToolStripMenuItem.Click
-        ImageDialog.ShowDialog()
-        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("#" + ImageDialog.SafeFileName + "$")
-        serverStream.Write(outStream, 0, outStream.Length)
-        serverStream.Flush()
+        If Not (boardLocked And Not isHost) Then
+            ImageDialog.ShowDialog()
+            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("#" + ImageDialog.SafeFileName + "$")
+            serverStream.Write(outStream, 0, outStream.Length)
+            serverStream.Flush()
+        End If
     End Sub
 
     Private Sub AddPieceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddPieceToolStripMenuItem.Click
@@ -206,17 +270,21 @@ Public Class Form1
     End Sub
 
     Public Sub addNewDie(ByVal sides As String)
-        Dim imgFile As String = String.Concat("d", sides, ".png")
-        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("&" + sides + imgFile + "$")
-        serverStream.Write(outStream, 0, outStream.Length)
-        serverStream.Flush()
+        If Not (boardLocked And Not isHost) Then
+            Dim imgFile As String = String.Concat("d", sides, ".png")
+            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("&" + sides + imgFile + "$")
+            serverStream.Write(outStream, 0, outStream.Length)
+            serverStream.Flush()
+        End If
     End Sub
 
     Private Sub addNewPiece()
-        ImageDialog.ShowDialog()
-        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("@" + ImageDialog.SafeFileName + "$")
-        serverStream.Write(outStream, 0, outStream.Length)
-        serverStream.Flush()
+        If Not (boardLocked And Not isHost) Then
+            ImageDialog.ShowDialog()
+            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("@" + ImageDialog.SafeFileName + "$")
+            serverStream.Write(outStream, 0, outStream.Length)
+            serverStream.Flush()
+        End If
     End Sub
 
     Private Sub createNewPiece(ByVal piecefile As String, ByVal sides As Integer)
@@ -237,6 +305,8 @@ Public Class Form1
         AddHandler PB.MouseDown, AddressOf PieceMouseDown
         AddHandler PB.MouseMove, AddressOf PieceDrag
         AddHandler PB.MouseUp, AddressOf PieceRelease
+        AddHandler PB.MouseClick, AddressOf OpenContextMenu
+
         If sides = 4 Then
             AddHandler PB.DoubleClick, AddressOf rollDie4
         ElseIf sides = 2 Then
@@ -319,5 +389,55 @@ Public Class Form1
 
     Private Sub AddDieToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddDieToolStripMenuItem.Click
         Form4.Show()
+    End Sub
+
+    Private Sub OpenContextMenu(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        If (e.Button = MouseButtons.Right) Then
+            PieceContextMenu.Show()
+            PieceContextMenu.Left = Me.Left + dragged.Left
+            PieceContextMenu.Top = Me.Top + dragged.Top + 25
+        End If
+
+    End Sub
+
+    Private Sub RemovePieceToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RemovePieceToolStripMenuItem.Click
+        If Not (boardLocked And Not isHost) Then
+            Dim pieceNum As Integer
+            Try
+                pieceNum = Convert.ToInt32(dragged.Name.Substring(8))
+                Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("dispose " + pieceNum.ToString + "$")
+                serverStream.Write(outStream, 0, outStream.Length)
+                serverStream.Flush()
+            Catch ex As Exception
+            End Try
+        End If
+    End Sub
+
+    Private Sub LockBoardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LockBoardToolStripMenuItem.Click
+        If boardLocked Then
+            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("unlockboard" + "$")
+            serverStream.Write(outStream, 0, outStream.Length)
+            serverStream.Flush()
+        Else
+            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("lockboard" + "$")
+            serverStream.Write(outStream, 0, outStream.Length)
+            serverStream.Flush()
+        End If
+    End Sub
+
+    Private Sub LockBoard()
+        boardLocked = True
+
+        If Not isHost Then
+            PlayArea.Enabled = False
+        End If
+    End Sub
+
+    Private Sub UnlockBoard()
+        boardLocked = False
+
+        If Not isHost Then
+            PlayArea.Enabled = True
+        End If
     End Sub
 End Class

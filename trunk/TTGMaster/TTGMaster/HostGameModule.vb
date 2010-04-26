@@ -57,7 +57,7 @@ Module HostGameModule
             Dim broadcastBytes As [Byte]()
 
             If flag = True Then
-                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) Then
+                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
                 ElseIf isDiceCommand(msg) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(rollDie(msg.Substring(5)))
@@ -74,15 +74,48 @@ Module HostGameModule
     End Sub
 
     Private Function isDiceCommand(ByVal inMsg As String)
-        If inMsg.Length <= 4 Then
+        If inMsg.Length <= 5 Then
             Return False
         End If
 
-        If Not (String.Compare(inMsg.Substring(0, 4), "roll") = 0) Then
+        If Not (String.Compare(inMsg.Substring(0, 5), "roll ") = 0) Then
             Return False
         End If
 
         Return True
+    End Function
+
+    Private Function isDisposeCommand(ByVal inMsg As String)
+        If inMsg.Length <= 8 Then
+            Return False
+        End If
+
+        If Not (String.Compare(inMsg.Substring(0, 8), "dispose ") = 0) Then
+            Return False
+        End If
+
+        Return True
+    End Function
+
+    Private Function isLockCommand(ByVal inMsg As String)
+        If inMsg.Length < 9 Then
+            Return False
+        End If
+
+        If (String.Compare(inMsg.Substring(0, 9), "lockboard") = 0) Then
+            Return True
+        End If
+
+        If inMsg.Length < 11 Then
+            Return False
+        End If
+
+        If (String.Compare(inMsg.Substring(0, 11), "unlockboard") = 0) Then
+            Return True
+        End If
+
+        Return False
+
     End Function
 
     Private Function rollDie(ByVal inMsg As String)

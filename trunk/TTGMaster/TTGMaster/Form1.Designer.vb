@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
         Me.ChatInputBox = New System.Windows.Forms.TextBox
         Me.ChatSendButton = New System.Windows.Forms.Button
         Me.ChatBox = New System.Windows.Forms.TextBox
@@ -34,6 +35,7 @@ Partial Class Form1
         Me.GameToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.AddPieceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.LoadBoardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.AddDieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ShowActionTextToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ShowMyIPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -42,10 +44,14 @@ Partial Class Form1
         Me.PlayArea = New System.Windows.Forms.GroupBox
         Me.BoardImage = New System.Windows.Forms.PictureBox
         Me.ImageDialog = New System.Windows.Forms.OpenFileDialog
-        Me.AddDieToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.PieceContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.RemovePieceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator
+        Me.LockBoardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuStrip1.SuspendLayout()
         Me.PlayArea.SuspendLayout()
         CType(Me.BoardImage, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PieceContextMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'ChatInputBox
@@ -120,7 +126,7 @@ Partial Class Form1
         '
         'GameToolStripMenuItem
         '
-        Me.GameToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddPieceToolStripMenuItem, Me.LoadBoardToolStripMenuItem, Me.AddDieToolStripMenuItem})
+        Me.GameToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddPieceToolStripMenuItem, Me.LoadBoardToolStripMenuItem, Me.AddDieToolStripMenuItem, Me.ToolStripMenuItem3, Me.LockBoardToolStripMenuItem})
         Me.GameToolStripMenuItem.Name = "GameToolStripMenuItem"
         Me.GameToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.G), System.Windows.Forms.Keys)
         Me.GameToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
@@ -141,6 +147,13 @@ Partial Class Form1
         Me.LoadBoardToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.B), System.Windows.Forms.Keys)
         Me.LoadBoardToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.LoadBoardToolStripMenuItem.Text = "Load &Board"
+        '
+        'AddDieToolStripMenuItem
+        '
+        Me.AddDieToolStripMenuItem.Enabled = False
+        Me.AddDieToolStripMenuItem.Name = "AddDieToolStripMenuItem"
+        Me.AddDieToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.AddDieToolStripMenuItem.Text = "Add &Die"
         '
         'ViewToolStripMenuItem
         '
@@ -197,11 +210,29 @@ Partial Class Form1
         '
         Me.ImageDialog.FileName = "OpenFileDialog1"
         '
-        'AddDieToolStripMenuItem
+        'PieceContextMenu
         '
-        Me.AddDieToolStripMenuItem.Name = "AddDieToolStripMenuItem"
-        Me.AddDieToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.AddDieToolStripMenuItem.Text = "Add &Die"
+        Me.PieceContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemovePieceToolStripMenuItem})
+        Me.PieceContextMenu.Name = "PieceContextMenu"
+        Me.PieceContextMenu.Size = New System.Drawing.Size(149, 26)
+        '
+        'RemovePieceToolStripMenuItem
+        '
+        Me.RemovePieceToolStripMenuItem.Name = "RemovePieceToolStripMenuItem"
+        Me.RemovePieceToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.RemovePieceToolStripMenuItem.Text = "Remove Piece"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(172, 6)
+        '
+        'LockBoardToolStripMenuItem
+        '
+        Me.LockBoardToolStripMenuItem.Enabled = False
+        Me.LockBoardToolStripMenuItem.Name = "LockBoardToolStripMenuItem"
+        Me.LockBoardToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.LockBoardToolStripMenuItem.Text = "Lock Board"
         '
         'Form1
         '
@@ -221,6 +252,7 @@ Partial Class Form1
         Me.MenuStrip1.PerformLayout()
         Me.PlayArea.ResumeLayout(False)
         CType(Me.BoardImage, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PieceContextMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -246,5 +278,9 @@ Partial Class Form1
     Friend WithEvents ShowActionTextToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowMyIPToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AddDieToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PieceContextMenu As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents RemovePieceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents LockBoardToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

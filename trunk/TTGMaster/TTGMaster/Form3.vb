@@ -10,4 +10,5 @@
         Thread1.Abort()
         Me.Close()
     End Sub
+
 End Class
