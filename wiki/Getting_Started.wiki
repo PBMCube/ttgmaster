@@ -4,7 +4,7 @@ TTGMaster allows multiple users to connect to one host and play a game together.
 
 = You Will Need =
 
-One player to host the game. All players need to have a connection to the internet. The host will also need several images to display as the game board and game pieces.
+One player to host the game. All players need to have a connection to the internet. The host and players will also need several images to display as the game board and game pieces. We recommend the host to send a zip file containing all the pieces to every player.
 
 = Creating a Game =
 
@@ -13,6 +13,10 @@ http://i43.tinypic.com/2ephlir.jpg
 Start by clicking on *File* -> *Connect*.  This will bring up a box where you can choose to Host Game or Connect to Game. Choose the *Host Game* option.
 
 http://i41.tinypic.com/15i3fjl.jpg
+
+Click on the *Host Game* radio button.
+
+The *IP* field should display the IP address for other players to connect to. If your internet connection goes through a router however, you may need to find your IP via other methods. We recommend [http://whatsmyip.org].
 
 The *Game Name* option is the name you would like your game called. 
 
