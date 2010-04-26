@@ -19,8 +19,10 @@ When enabled will display actions to chat box.
 http://i42.tinypic.com/2r76ivc.jpg
 
 *#imagefile* represents the board object, loaded from imagefile.
+
 *@imagefile* represents an piece added, using the image at imagefile.
+
 *&imagefile* represents a die object added, imagefile being the specific image that TTGMaster uses for its die image of the specified side size.
 
-The asterisks followed by numbers represent a piece being moved.
+The *asterisks* followed by numbers represent a piece being moved.
 First number is piece number, second is x position moved to, and second number is y position moved to.
