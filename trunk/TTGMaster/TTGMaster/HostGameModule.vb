@@ -45,6 +45,7 @@ Module HostGameModule
         mesg.Trim()
         Console.WriteLine(" >> " + mesg)
     End Sub
+
     Private Sub broadcast(ByVal msg As String, _
     ByVal uName As String, ByVal flag As Boolean)
         Dim Item As DictionaryEntry
@@ -56,7 +57,7 @@ Module HostGameModule
             Dim broadcastBytes As [Byte]()
 
             If flag = True Then
-                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Then
+                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
                 ElseIf isDiceCommand(msg) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(rollDie(msg.Substring(5)))
