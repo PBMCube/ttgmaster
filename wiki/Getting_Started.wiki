@@ -88,6 +88,14 @@ http://i44.tinypic.com/2qtlqur.jpg
 
 The number after the d represents the number of sides of the die and the number after that is the value that was rolled.
 
+= Removing Pieces and Dice =
+
+During a game you may need to remove a piece or die object.
+
+http://i39.tinypic.com/20f9cwg.jpg
+
+To do this simply *right-click* the Piece of Die and select *Remove Piece*. This removes the piece or die from the game.
+
 = Playing your game =
 
 http://i40.tinypic.com/wmdor5.jpg
