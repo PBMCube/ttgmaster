@@ -445,7 +445,7 @@ Public Class Form1
             While ctThread.IsAlive
 
             End While
-            MsgBox("Assumably aborted...", MsgBoxStyle.Exclamation)
+            'MsgBox("Assumably aborted...", MsgBoxStyle.Exclamation)
         End If
     End Sub
 
