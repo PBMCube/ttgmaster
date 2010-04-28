@@ -17,6 +17,8 @@ Public Class Form1
     Dim dragX As Integer = 0
     Dim dragY As Integer = 0
     Dim dragged As Control
+    Dim dragOrigLeft As Integer = 0
+    Dim dragOrigTop As Integer = 0
 
     Dim pieceCount = 0
     Dim pieces As List(Of Control)
@@ -225,6 +227,8 @@ Public Class Form1
         dragX = e.X
         dragY = e.Y
         dragged = sender
+        dragOrigLeft = dragged.Left
+        dragOrigTop = dragged.Top
     End Sub
 
 
@@ -237,7 +241,7 @@ Public Class Form1
 
     Private Sub PieceRelease(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
         If Not (boardLocked And Not isHost) Then
-            If (e.Button = MouseButtons.Left) Then
+            If (e.Button = MouseButtons.Left) And Not ((dragged.Left = dragOrigLeft) And (dragged.Top = dragOrigTop)) Then
                 Dim pieceNum As Integer
                 Try
                     pieceNum = Convert.ToInt32(dragged.Name.Substring(8))
@@ -252,10 +256,11 @@ Public Class Form1
 
     Private Sub LoadBoardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadBoardToolStripMenuItem.Click
         If Not (boardLocked And Not isHost) Then
-            ImageDialog.ShowDialog()
-            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("#" + ImageDialog.SafeFileName + "$")
-            serverStream.Write(outStream, 0, outStream.Length)
-            serverStream.Flush()
+            If ImageDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("#" + ImageDialog.SafeFileName + "$")
+                serverStream.Write(outStream, 0, outStream.Length)
+                serverStream.Flush()
+            End If
         End If
     End Sub
 
@@ -274,10 +279,11 @@ Public Class Form1
 
     Private Sub addNewPiece()
         If Not (boardLocked And Not isHost) Then
-            ImageDialog.ShowDialog()
-            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("@" + ImageDialog.SafeFileName + "$")
-            serverStream.Write(outStream, 0, outStream.Length)
-            serverStream.Flush()
+            If ImageDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("@" + ImageDialog.SafeFileName + "$")
+                serverStream.Write(outStream, 0, outStream.Length)
+                serverStream.Flush()
+            End If
         End If
     End Sub
 
