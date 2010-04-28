@@ -205,13 +205,7 @@ Public Class Form1
     End Sub
 
     Private Sub DisconnectToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DisconnectToolStripMenuItem.Click
-        If ctThread.IsAlive Then
-            Me.clientSocket.Close()
-            While ctThread.IsAlive
-
-            End While
-            MsgBox("Assumably aborted...", MsgBoxStyle.Exclamation)
-        End If
+        disconnect()
 
         ChatInputBox.Enabled = False
         ChatSendButton.Enabled = False
@@ -440,4 +434,23 @@ Public Class Form1
             PlayArea.Enabled = True
         End If
     End Sub
+
+    Private Sub disconnect()
+        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("%" + "$")
+        serverStream.Write(outStream, 0, outStream.Length)
+        serverStream.Flush()
+
+        If ctThread.IsAlive Then
+            Me.clientSocket.Close()
+            While ctThread.IsAlive
+
+            End While
+            MsgBox("Assumably aborted...", MsgBoxStyle.Exclamation)
+        End If
+    End Sub
+
+    Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        disconnect()
+    End Sub
+
 End Class

@@ -23,15 +23,14 @@ Module HostGameModule
             clientSocket.GetStream()
             networkStream.Read(bytesFrom, 0, CInt(clientSocket.ReceiveBufferSize))
             dataFromClient = System.Text.Encoding.ASCII.GetString(bytesFrom)
-            dataFromClient = _
-            dataFromClient.Substring(0, dataFromClient.IndexOf("$"))
+            dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"))
 
             clientsList(dataFromClient) = clientSocket
 
             broadcast(dataFromClient + " Joined ", dataFromClient, False)
 
             msg(dataFromClient + " Joined chat room ")
-            Dim client As New handleClinet
+            Dim client As New handleClient
             client.startClient(clientSocket, dataFromClient, clientsList)
         End While
 
@@ -61,10 +60,17 @@ Module HostGameModule
             Dim broadcastBytes As [Byte]()
 
             If flag = True Then
-                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
+                If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) _
+                Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) _
+                Or (String.Compare(msg(0), "%") = 0) Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
+
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
                 ElseIf isDiceCommand(msg) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(diceRollMsg)
+                ElseIf String.Compare(msg(0), "%") = 0 Then
+                    broadcastBytes = Encoding.ASCII.GetBytes(uName + " disconnects.")
+                    broadcastSocket.Close()
+                    clientsList.Remove(Item.Value)
                 Else
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
                 End If
@@ -149,7 +155,7 @@ Module HostGameModule
         Return final
     End Function
 
-    Public Class handleClinet
+    Public Class handleClient
         Dim clientSocket As TcpClient
         Dim clNo As String
         Dim clientsList As Hashtable
@@ -182,7 +188,7 @@ Module HostGameModule
                     networkStream.Read(bytesFrom, 0, CInt(clientSocket.ReceiveBufferSize))
                     dataFromClient = System.Text.Encoding.ASCII.GetString(bytesFrom)
                     dataFromClient = _
-            dataFromClient.Substring(0, dataFromClient.IndexOf("$"))
+                        dataFromClient.Substring(0, dataFromClient.IndexOf("$"))
                     msg("From client - " + clNo + " : " + dataFromClient)
                     rCount = Convert.ToString(requestCount)
 
