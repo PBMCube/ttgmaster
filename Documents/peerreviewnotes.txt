@@ -1,0 +1,25 @@
+		Team Pineapple review of Team Awesome
+-	VS may be able to make diagrams itself.
+-	had questions about which were client/host classes
+-	asked about if we had constructors
+-	rename filenames so that it's easier to find classes from diagrams
+-	asked about handles, how they interract with buttons (may be a VB specific thing)
+-	suggests "n"(variable) should be more descriptive
+-	(detech closed sockets so that they arnt used)(set them to NULL)
+-	understand better, the code we borrowed from other places
+
+
+
+		reviewing Troy IN Action
+
+-	asked about some features
+-	More comments explainning what some functions are doing
+	(either a large description before function, or smaller ones throughout)
+-	Some variable names weren't descriptive enough (newa tho to be fair makes sense if
+	HTML didn't name links with <a>)
+-	CSS wasn't commented, but we didin't feel it necessary (CSS fairly straighforward)
+-	A section was copied pasted, maybe reduce that somehow to reduce size
+-	possibly use a side file to describe what functions do (since they dont want comments
+	in their HTML)
+-	declare variables together, instead of being introduced throughout code
+-	otherwise, formatted consistantly and straightforward code
