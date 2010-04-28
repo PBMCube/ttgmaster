@@ -52,6 +52,18 @@ Module HostGameModule
             diceRollMsg = rollDie(msg.Substring(5))
         End If
         Dim Item As DictionaryEntry
+
+        If (String.Compare(msg(0), "%") = 0) Then
+            For Each Item In clientsList
+                If (String.Compare(Item.Key, uName) = 0) Then
+                    Dim closeSocket As TcpClient = CType(Item.Value, TcpClient)
+                    closeSocket.Close()
+                    clientsList.Remove(Item.Key)
+                    Exit For
+                End If
+            Next
+        End If
+
         For Each Item In clientsList
             Dim broadcastSocket As TcpClient
             broadcastSocket = CType(Item.Value, TcpClient)
@@ -62,15 +74,13 @@ Module HostGameModule
             If flag = True Then
                 If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) _
                 Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) _
-                Or (String.Compare(msg(0), "%") = 0) Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
+                Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
 
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
                 ElseIf isDiceCommand(msg) Then
                     broadcastBytes = Encoding.ASCII.GetBytes(diceRollMsg)
                 ElseIf String.Compare(msg(0), "%") = 0 Then
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " disconnects.")
-                    broadcastSocket.Close()
-                    clientsList.Remove(Item.Value)
                 Else
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
                 End If
