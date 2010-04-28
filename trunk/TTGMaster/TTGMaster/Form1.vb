@@ -3,9 +3,9 @@ Imports System.Text
 Imports System.IO
 
 
-Public Class Form1
+Public Class MainWindow
 
-    Dim versionNum As String = "v0.7.0"
+    Dim versionNum As String = "v1.0.0"
     Dim clientSocket As New System.Net.Sockets.TcpClient()
     Dim serverStream As NetworkStream
     Dim readData As String
@@ -36,32 +36,35 @@ Public Class Form1
     End Sub
 
     Private Sub ConnectToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectToolStripMenuItem.Click
-        Form2.Show()
+        ConnectWindow.Show()
     End Sub
 
     Public Sub goConnect(ByVal inName As String, ByVal IPAddress As String, ByVal portNumber As Integer)
+        'Connects to the host
         readData = "Connected to Chat Server ..."
         msg()
         Try
             clientSocket.Connect(IPAddress, portNumber)
             serverStream = clientSocket.GetStream()
         Catch ex As Exception
-            Form2.Show()
-            Form2.Focus()
-            Form2.CouldNotConnect.Visible = True
+            ConnectWindow.Show()
+            ConnectWindow.Focus()
+            ConnectWindow.CouldNotConnect.Visible = True
             Return
         End Try
-        Form2.CouldNotConnect.Visible = False
+        ConnectWindow.CouldNotConnect.Visible = False
 
-
+        'Broadcasts entrance message
         Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes(inName + "$")
         serverStream.Write(outStream, 0, outStream.Length)
         serverStream.Flush()
 
+        'Starts connection thread
         endThread = False
         ctThread = New Threading.Thread(AddressOf Me.getMessage)
         ctThread.Start()
 
+        'Enables form functions after connection has been established
         ChatInputBox.Enabled = True
         ConnectToolStripMenuItem.Enabled = False
         DisconnectToolStripMenuItem.Enabled = True
@@ -75,9 +78,12 @@ Public Class Form1
     End Sub
 
     Private Sub ChatSendButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChatSendButton.Click
+        ' Sends message
         Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes(ChatInputBox.Text + "$")
         serverStream.Write(outStream, 0, outStream.Length)
         serverStream.Flush()
+
+        'Resets chat input
         ChatInputBox.Text = ""
         ChatSendButton.Enabled = False
     End Sub
@@ -89,21 +95,28 @@ Public Class Form1
             Dim actionText As Boolean = False
 
             If String.Compare(readData(0), "@") = 0 Then
+                '@ is used for adding pieces
                 Dim newPiece As String
                 newPiece = Path.Combine(Directory.GetCurrentDirectory.ToString(), readData.Substring(1).Replace(vbNewLine, "").Replace(vbNullChar, ""))
                 createNewPiece(newPiece, 0)
                 actionText = True
+
             ElseIf String.Compare(readData(0), "&") = 0 Then
+                '& is used for adding a die
                 Dim newPiece As String
                 newPiece = Path.Combine(Directory.GetCurrentDirectory.ToString(), readData.Substring(3).Replace(vbNewLine, "").Replace(vbNullChar, ""))
                 createNewPiece(newPiece, Convert.ToInt32(readData.Substring(1, 2)))
                 actionText = True
+
             ElseIf String.Compare(readData(0), "#") = 0 Then
+                '# is used for changing the board image
                 Dim bg As String
                 bg = Path.Combine(Directory.GetCurrentDirectory.ToString(), readData.Substring(1).Replace(vbNewLine, "").Replace(vbNullChar, ""))
                 changeBackground(bg)
                 actionText = True
+
             ElseIf String.Compare(readData(0), "*") = 0 Then
+                '* is used for moving pieces
                 Try
                     Dim splitS As String() = (readData.Substring(1)).Split("*")
                     Dim pieceNum As Integer = Convert.ToInt32(splitS(0))
@@ -116,7 +129,9 @@ Public Class Form1
                 Catch ex As Exception
                 End Try
                 actionText = True
+
             ElseIf (isDisposeCommand(readData)) Then
+                'dispose commands are used for deleting pieces
                 Try
                     Dim pieceNumS = readData.Substring(8)
                     Dim pieceNum As Integer = Convert.ToInt32(pieceNumS)
@@ -126,7 +141,9 @@ Public Class Form1
                 Catch ex As Exception
                 End Try
                 actionText = True
+
             ElseIf (isLockCommand(readData)) Then
+                'Lock commands are used for locking or unlocking the board
                 Try
                     If (String.Compare(readData.Substring(0, 9), "lockboard") = 0) Then
                         LockBoard()
@@ -138,6 +155,7 @@ Public Class Form1
                 actionText = True
             End If
 
+            'Displays a message publicly
             If (actionText = False) Or (actionText And ShowActionTextToolStripMenuItem.Checked) Then
                 ChatBox.Text = ChatBox.Text + Environment.NewLine + " >> " + readData
                 ChatBox.SelectionStart = ChatBox.TextLength
@@ -147,6 +165,8 @@ Public Class Form1
     End Sub
 
     Private Function isDisposeCommand(ByVal inMsg As String)
+        'Determines if a message is a dispose command
+
         If inMsg.Length <= 8 Then
             Return False
         End If
@@ -159,6 +179,8 @@ Public Class Form1
     End Function
 
     Private Function isLockCommand(ByVal inMsg As String)
+        'Determines if a message is a lock or unlock command
+
         If inMsg.Length < 9 Then
             Return False
         End If
@@ -180,6 +202,8 @@ Public Class Form1
     End Function
 
     Private Sub getMessage()
+        'Receives a message from the socket
+
         While endThread = False
             serverStream = clientSocket.GetStream()
             Dim buffSize As Integer
@@ -207,8 +231,10 @@ Public Class Form1
     End Sub
 
     Private Sub DisconnectToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DisconnectToolStripMenuItem.Click
+        'Properly disconnects from the host
         disconnect()
 
+        'Disables form functionality when not connected
         ChatInputBox.Enabled = False
         ChatSendButton.Enabled = False
         ConnectToolStripMenuItem.Enabled = True
@@ -218,12 +244,14 @@ Public Class Form1
         AddDieToolStripMenuItem.Enabled = False
         LockBoardToolStripMenuItem.Enabled = False
 
+        'Stops hosting if applicable
         If isHost Then
-            Form3.stopit()
+            HostWindow.stopit()
         End If
     End Sub
 
     Private Sub PieceMouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        'Starts dragging a piece
         dragX = e.X
         dragY = e.Y
         dragged = sender
@@ -233,6 +261,7 @@ Public Class Form1
 
 
     Private Sub PieceDrag(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        'Moving the mouse while dragging a piece
         If (e.Button = MouseButtons.Left) Then
             dragged.Left += (e.X - dragX)
             dragged.Top += (e.Y - dragY)
@@ -240,10 +269,13 @@ Public Class Form1
     End Sub
 
     Private Sub PieceRelease(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        'Releases a piece
+
         If Not (boardLocked And Not isHost) Then
             If (e.Button = MouseButtons.Left) And Not ((dragged.Left = dragOrigLeft) And (dragged.Top = dragOrigTop)) Then
                 Dim pieceNum As Integer
                 Try
+                    'If allowed, sends a movement message to the host
                     pieceNum = Convert.ToInt32(dragged.Name.Substring(8))
                     Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("*" + pieceNum.ToString + "*" + dragged.Left.ToString + "*" + dragged.Top.ToString + "$")
                     serverStream.Write(outStream, 0, outStream.Length)
@@ -257,6 +289,7 @@ Public Class Form1
     Private Sub LoadBoardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LoadBoardToolStripMenuItem.Click
         If Not (boardLocked And Not isHost) Then
             If ImageDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                'Sends a board-changing message to the host
                 Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("#" + ImageDialog.SafeFileName + "$")
                 serverStream.Write(outStream, 0, outStream.Length)
                 serverStream.Flush()
@@ -271,6 +304,7 @@ Public Class Form1
     Public Sub addNewDie(ByVal sides As String)
         If Not (boardLocked And Not isHost) Then
             Dim imgFile As String = String.Concat("d", sides, ".png")
+            'Sends a die-adding message to the host
             Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("&" + sides + imgFile + "$")
             serverStream.Write(outStream, 0, outStream.Length)
             serverStream.Flush()
@@ -280,6 +314,7 @@ Public Class Form1
     Private Sub addNewPiece()
         If Not (boardLocked And Not isHost) Then
             If ImageDialog.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                'Sends a piece-adding message to the host
                 Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("@" + ImageDialog.SafeFileName + "$")
                 serverStream.Write(outStream, 0, outStream.Length)
                 serverStream.Flush()
@@ -288,6 +323,8 @@ Public Class Form1
     End Sub
 
     Private Sub createNewPiece(ByVal piecefile As String, ByVal sides As Integer)
+
+        'Creates a new PictureBox object to represent the piece
         Dim PB As New PictureBox
         With PB
             .Name = "PiecePic" + pieceCount.ToString
@@ -297,16 +334,17 @@ Public Class Form1
         End With
         pieceCount += 1
 
-        '  This is the line that sometimes catches people out!
+        'Adds piece to the playarea
         PlayArea.Controls.Add(PB)
         BoardImage.SendToBack()
 
-        '  Wire this control up to an appropriate event handler
+        ' Wire this control up to an appropriate event handler
         AddHandler PB.MouseDown, AddressOf PieceMouseDown
         AddHandler PB.MouseMove, AddressOf PieceDrag
         AddHandler PB.MouseUp, AddressOf PieceRelease
         AddHandler PB.MouseClick, AddressOf OpenContextMenu
 
+        'Adds event to die if applicable
         If sides = 4 Then
             AddHandler PB.DoubleClick, AddressOf rollDie4
         ElseIf sides = 2 Then
@@ -375,6 +413,8 @@ Public Class Form1
     End Sub
 
     Private Sub ChatInputBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChatInputBox.TextChanged
+        'Enables or disables the chat send button based on whether there are characters typed
+
         If ChatInputBox.Text.Length > 0 Then
             ChatSendButton.Enabled = True
         Else
@@ -383,15 +423,19 @@ Public Class Form1
     End Sub
 
     Private Sub ShowMyIPToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ShowMyIPToolStripMenuItem.Click
-        Dim strIPAddress As String = Form2.GetIPAddress()
+        'Displays the user's IP address
+
+        Dim strIPAddress As String = ConnectWindow.GetIPAddress()
         MessageBox.Show("IP Address: " & strIPAddress)
     End Sub
 
     Private Sub AddDieToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AddDieToolStripMenuItem.Click
-        Form4.Show()
+        DieWindow.Show()
     End Sub
 
     Private Sub OpenContextMenu(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+        'Opens the piece removal context menu
+
         If (e.Button = MouseButtons.Right) Then
             PieceContextMenu.Show()
             PieceContextMenu.Left = Me.Left + dragged.Left
@@ -404,6 +448,7 @@ Public Class Form1
         If Not (boardLocked And Not isHost) Then
             Dim pieceNum As Integer
             Try
+                'Sends a piece-disposing message to the host
                 pieceNum = Convert.ToInt32(dragged.Name.Substring(8))
                 Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("dispose " + pieceNum.ToString + "$")
                 serverStream.Write(outStream, 0, outStream.Length)
@@ -414,6 +459,8 @@ Public Class Form1
     End Sub
 
     Private Sub LockBoardToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LockBoardToolStripMenuItem.Click
+        'Sends a board-locking or board-unlocking message to the host
+
         If boardLocked Then
             Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("unlockboard" + "$")
             serverStream.Write(outStream, 0, outStream.Length)
@@ -426,6 +473,8 @@ Public Class Form1
     End Sub
 
     Private Sub LockBoard()
+        'Disables board functionality if locked
+
         boardLocked = True
 
         If Not isHost Then
@@ -434,6 +483,8 @@ Public Class Form1
     End Sub
 
     Private Sub UnlockBoard()
+        'Enables board functionality if unlocked
+
         boardLocked = False
 
         If Not isHost Then
@@ -442,17 +493,24 @@ Public Class Form1
     End Sub
 
     Private Sub disconnect()
-        Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("%" + "$")
-        serverStream.Write(outStream, 0, outStream.Length)
-        serverStream.Flush()
+        'Disconnects from the host
 
-        If ctThread.IsAlive Then
-            Me.clientSocket.Close()
-            While ctThread.IsAlive
+        Try
+            'Sends a disconnection message to the host
+            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("%" + "$")
+            serverStream.Write(outStream, 0, outStream.Length)
+            serverStream.Flush()
 
-            End While
-            'MsgBox("Assumably aborted...", MsgBoxStyle.Exclamation)
-        End If
+            'Waits for thread to end
+            If ctThread.IsAlive Then
+                Me.clientSocket.Close()
+                While ctThread.IsAlive
+
+                End While
+            End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing

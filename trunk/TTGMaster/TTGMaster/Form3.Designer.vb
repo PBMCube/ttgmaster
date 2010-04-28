@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Form3
+Partial Class HostWindow
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -34,7 +34,7 @@ Partial Class Form3
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Hosting Game..."
         '
-        'Form3
+        'HostWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -43,7 +43,7 @@ Partial Class Form3
         Me.Controls.Add(Me.Label1)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Form3"
+        Me.Name = "HostWindow"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Text = "Hosting"

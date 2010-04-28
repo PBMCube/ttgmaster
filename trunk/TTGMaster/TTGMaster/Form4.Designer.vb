@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Form4
+Partial Class DieWindow
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -57,7 +57,7 @@ Partial Class Form4
         Me.Button1.Text = "Create"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'Form4
+        'DieWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -65,7 +65,7 @@ Partial Class Form4
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.ComboBox1)
-        Me.Name = "Form4"
+        Me.Name = "DieWindow"
         Me.Text = "Add Die"
         Me.ResumeLayout(False)
         Me.PerformLayout()

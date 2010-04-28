@@ -1,20 +1,25 @@
 ﻿Imports System.Net.Sockets
 Imports System.Text
 
-Public Class Form2
+Public Class ConnectWindow
 
     Public Function GetIPAddress() As String
+        'Gets the user's current IP address
+
         Dim strHostName As String
         Dim strIPAddress As String = ""
         strHostName = System.Net.Dns.GetHostName()
         Dim i As Integer
         Dim myBound As Integer = System.Net.Dns.GetHostByName(strHostName).AddressList.Length() - 1
+
+        'Iterates through all possible IP addresses
         For i = 0 To myBound
             strIPAddress = System.Net.Dns.GetHostByName(strHostName).AddressList(i).ToString()
             Dim strIPseg As String() = strIPAddress.Split(".")
             Dim seg1 As Integer = Convert.ToInt32(strIPseg(0))
             Dim seg2 As Integer = Convert.ToInt32(strIPseg(1))
 
+            'Bypasses invalid addresses
             If seg1 = 0 Then
                 Continue For
             ElseIf seg1 = 10 Then
@@ -35,6 +40,8 @@ Public Class Form2
     End Function
 
     Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HostRadio.CheckedChanged
+        'Enables and disables features based on selecting the "Host Game" option
+
         HostGroup.Enabled = True
         JoinGroup.Enabled = False
         IPAddressBox.Text = GetIPAddress()
@@ -44,6 +51,8 @@ Public Class Form2
     End Sub
 
     Private Sub RadioButton2_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles JoinRadio.CheckedChanged
+        'Enables and disables features based on selecting the "Join Game" option
+
         HostGroup.Enabled = False
         JoinGroup.Enabled = True
         IPAddressBox.Enabled = True
@@ -53,16 +62,20 @@ Public Class Form2
     End Sub
 
     Private Sub ConnectButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConnectButton.Click
-        checkForEnable()
+        'The connect button is clicked
 
+        'Checks to make sure the button should be enabled
+        checkForEnable()
         If ConnectButton.Enabled Then
             Dim n As String = UserName.Text.ToString
 
             If JoinRadio.Checked Then
-                Form1.setIsHost(False)
+                'Joins game as client
+                MainWindow.setIsHost(False)
                 joinGame(n, IPAddressBox.Text.ToString, PortNumber.Value)
             Else
-                Form1.setIsHost(True)
+                'Hosts game and also joins self as client
+                MainWindow.setIsHost(True)
                 hostGame(PortNumber.Value)
                 joinGame(n, "127.0.0.1", PortNumber.Value)
             End If
@@ -70,14 +83,14 @@ Public Class Form2
     End Sub
 
     Private Sub hostGame(ByVal portNumber As Integer)
-        Form3.Show()
-        Form3.go(portNumber)
+        HostWindow.Show()
+        HostWindow.go(portNumber)
     End Sub
 
     Private Sub joinGame(ByVal inName As String, ByVal IPAddress As String, ByVal portNumber As Integer)
-        Form1.goConnect(inName, IPAddress, portNumber)
+        MainWindow.goConnect(inName, IPAddress, portNumber)
         Me.Close()
-        Form1.Focus()
+        MainWindow.Focus()
     End Sub
 
     Private Sub UserName_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UserName.TextChanged
@@ -89,6 +102,8 @@ Public Class Form2
     End Sub
 
     Private Sub checkForEnable()
+        'Checks to see if the Connect Button should be enabled
+
         If (UserName.Text.Length > 0) And ((HostRadio.Checked) Or (JoinRadio.Checked)) And (PortNumber.Value > 0) Then
             ConnectButton.Enabled = True
         Else

@@ -12,6 +12,7 @@ Module HostGameModule
         msg("Chat Server Started ....")
         counter = 0
 
+        'Main loop
         While (True)
             counter += 1
             clientSocket = serverSocket.AcceptTcpClient()
@@ -19,6 +20,7 @@ Module HostGameModule
             Dim bytesFrom(10024) As Byte
             Dim dataFromClient As String
 
+            'Waits for new connections
             Dim networkStream As NetworkStream = _
             clientSocket.GetStream()
             networkStream.Read(bytesFrom, 0, CInt(clientSocket.ReceiveBufferSize))
@@ -47,12 +49,16 @@ Module HostGameModule
 
     Private Sub broadcast(ByVal msg As String, _
     ByVal uName As String, ByVal flag As Boolean)
+        'Broadcasts a message to all users.  Acts on special commands.
+
+        'Rolls die once if message is a dice roll command
         Dim diceRollMsg As String = "MissingNo."
         If isDiceCommand(msg) Then
-            diceRollMsg = rollDie(msg.Substring(5))
+            diceRollMsg = rollDie(msg.Substring(5), uName)
         End If
         Dim Item As DictionaryEntry
 
+        'Acts on disconnection message
         If (String.Compare(msg(0), "%") = 0) Then
             For Each Item In clientsList
                 If (String.Compare(Item.Key, uName) = 0) Then
@@ -64,6 +70,7 @@ Module HostGameModule
             Next
         End If
 
+        'Sends message to each client
         For Each Item In clientsList
             Dim broadcastSocket As TcpClient
             broadcastSocket = CType(Item.Value, TcpClient)
@@ -72,6 +79,7 @@ Module HostGameModule
             Dim broadcastBytes As [Byte]()
 
             If flag = True Then
+                'Sets the message for special commands in non-formated manner
                 If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) _
                 Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) _
                 Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
@@ -82,12 +90,14 @@ Module HostGameModule
                 ElseIf String.Compare(msg(0), "%") = 0 Then
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " disconnects.")
                 Else
+                    'Sets a non-command message
                     broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg)
                 End If
             Else
                 broadcastBytes = Encoding.ASCII.GetBytes(msg)
             End If
 
+            'Sends the message
             broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length)
             broadcastStream.Flush()
         Next
@@ -138,7 +148,9 @@ Module HostGameModule
 
     End Function
 
-    Private Function rollDie(ByVal inMsg As String)
+    Private Function rollDie(ByVal inMsg As String, ByVal userName As String)
+        'Rolls virtual dice
+
         Dim splitS As String() = inMsg.Split("d")
         If Not splitS.Length = 2 Then
             Return "Invalid Roll"
@@ -161,7 +173,7 @@ Module HostGameModule
             total += result
         Next
 
-        Dim final As String = ("Rolled " + inMsg + ": " + total.ToString).ToString()
+        Dim final As String = (userName + " rolls " + inMsg + ": " + total.ToString).ToString()
         Return final
     End Function
 
@@ -180,6 +192,8 @@ Module HostGameModule
         End Sub
 
         Private Sub doChat()
+            'Code that is called by the main connection thread
+
             'Dim infiniteCounter As Integer
             Dim requestCount As Integer
             Dim bytesFrom(10024) As Byte
