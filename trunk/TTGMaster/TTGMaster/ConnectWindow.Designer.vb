@@ -30,9 +30,7 @@ Partial Class ConnectWindow
         Me.Label1 = New System.Windows.Forms.Label
         Me.GroupBox2 = New System.Windows.Forms.GroupBox
         Me.PortNumber = New System.Windows.Forms.NumericUpDown
-        Me.Label4 = New System.Windows.Forms.Label
         Me.Label2 = New System.Windows.Forms.Label
-        Me.GamePassword = New System.Windows.Forms.TextBox
         Me.UserName = New System.Windows.Forms.TextBox
         Me.HostGroup = New System.Windows.Forms.GroupBox
         Me.Label5 = New System.Windows.Forms.Label
@@ -106,14 +104,12 @@ Partial Class ConnectWindow
         'GroupBox2
         '
         Me.GroupBox2.Controls.Add(Me.PortNumber)
-        Me.GroupBox2.Controls.Add(Me.Label4)
         Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.GamePassword)
         Me.GroupBox2.Controls.Add(Me.UserName)
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 112)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(310, 102)
+        Me.GroupBox2.Size = New System.Drawing.Size(310, 75)
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         '
@@ -125,15 +121,6 @@ Partial Class ConnectWindow
         Me.PortNumber.Size = New System.Drawing.Size(91, 20)
         Me.PortNumber.TabIndex = 8
         '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 74)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(101, 13)
-        Me.Label4.TabIndex = 7
-        Me.Label4.Text = "Password (Optional)"
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -142,13 +129,6 @@ Partial Class ConnectWindow
         Me.Label2.Size = New System.Drawing.Size(60, 13)
         Me.Label2.TabIndex = 5
         Me.Label2.Text = "User Name"
-        '
-        'GamePassword
-        '
-        Me.GamePassword.Location = New System.Drawing.Point(113, 71)
-        Me.GamePassword.Name = "GamePassword"
-        Me.GamePassword.Size = New System.Drawing.Size(191, 20)
-        Me.GamePassword.TabIndex = 6
         '
         'UserName
         '
@@ -187,7 +167,7 @@ Partial Class ConnectWindow
         'ConnectButton
         '
         Me.ConnectButton.Enabled = False
-        Me.ConnectButton.Location = New System.Drawing.Point(247, 220)
+        Me.ConnectButton.Location = New System.Drawing.Point(248, 196)
         Me.ConnectButton.Name = "ConnectButton"
         Me.ConnectButton.Size = New System.Drawing.Size(75, 32)
         Me.ConnectButton.TabIndex = 9
@@ -198,7 +178,7 @@ Partial Class ConnectWindow
         '
         Me.CouldNotConnect.AutoSize = True
         Me.CouldNotConnect.ForeColor = System.Drawing.Color.Red
-        Me.CouldNotConnect.Location = New System.Drawing.Point(138, 230)
+        Me.CouldNotConnect.Location = New System.Drawing.Point(139, 206)
         Me.CouldNotConnect.Name = "CouldNotConnect"
         Me.CouldNotConnect.Size = New System.Drawing.Size(103, 13)
         Me.CouldNotConnect.TabIndex = 10
@@ -209,7 +189,7 @@ Partial Class ConnectWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(334, 264)
+        Me.ClientSize = New System.Drawing.Size(334, 240)
         Me.Controls.Add(Me.CouldNotConnect)
         Me.Controls.Add(Me.ConnectButton)
         Me.Controls.Add(Me.HostGroup)
@@ -241,8 +221,6 @@ Partial Class ConnectWindow
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents IPAddressBox As System.Windows.Forms.TextBox
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents GamePassword As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents UserName As System.Windows.Forms.TextBox
     Friend WithEvents HostGroup As System.Windows.Forms.GroupBox

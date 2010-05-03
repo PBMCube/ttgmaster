@@ -10,8 +10,8 @@ Public Class MainWindow
     Dim serverStream As NetworkStream
     Dim readData As String
     Dim ctThread As Threading.Thread
-    Dim endThread As Boolean = False
-    Dim isHost As Boolean = False
+    Public endThread As Boolean = False
+    Public isHost As Boolean = False
     Dim boardLocked As Boolean = False
 
     Dim dragX As Integer = 0
@@ -67,7 +67,6 @@ Public Class MainWindow
         'Enables form functions after connection has been established
         ChatInputBox.Enabled = True
         ConnectToolStripMenuItem.Enabled = False
-        DisconnectToolStripMenuItem.Enabled = True
         AddPieceToolStripMenuItem.Enabled = True
         LoadBoardToolStripMenuItem.Enabled = True
         AddDieToolStripMenuItem.Enabled = True
@@ -153,6 +152,22 @@ Public Class MainWindow
                 Catch ex As Exception
                 End Try
                 actionText = True
+            ElseIf (isKILLCommand(readData)) Then
+                'KILL command kills the game
+                ChatBox.Text = ChatBox.Text + Environment.NewLine + "The game has ended.  Please restart TTGMaster to play again!"
+                ChatBox.SelectionStart = ChatBox.TextLength
+                ChatBox.ScrollToCaret()
+                'System.Threading.Thread.Sleep(2000)
+                disconnect()
+                PlayArea.Enabled = False
+                ChatInputBox.Enabled = False
+                ChatSendButton.Enabled = False
+                LockBoardToolStripMenuItem.Enabled = False
+                AddDieToolStripMenuItem.Enabled = False
+                AddPieceToolStripMenuItem.Enabled = False
+                LoadBoardToolStripMenuItem.Enabled = False
+
+                actionText = True
             End If
 
             'Displays a message publicly
@@ -163,6 +178,18 @@ Public Class MainWindow
             End If
         End If
     End Sub
+
+    Private Function isKillCommand(ByVal inMsg As String)
+        If inMsg.Length < 5 Then
+            Return False
+        End If
+
+        If Not (String.Compare(inMsg.Substring(0, 5), "~KILL") = 0) Then
+            Return False
+        End If
+
+        Return True
+    End Function
 
     Private Function isDisposeCommand(ByVal inMsg As String)
         'Determines if a message is a dispose command
@@ -230,25 +257,6 @@ Public Class MainWindow
 
     End Sub
 
-    Private Sub DisconnectToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DisconnectToolStripMenuItem.Click
-        'Properly disconnects from the host
-        disconnect()
-
-        'Disables form functionality when not connected
-        ChatInputBox.Enabled = False
-        ChatSendButton.Enabled = False
-        ConnectToolStripMenuItem.Enabled = True
-        DisconnectToolStripMenuItem.Enabled = False
-        AddPieceToolStripMenuItem.Enabled = False
-        LoadBoardToolStripMenuItem.Enabled = False
-        AddDieToolStripMenuItem.Enabled = False
-        LockBoardToolStripMenuItem.Enabled = False
-
-        'Stops hosting if applicable
-        If isHost Then
-            HostWindow.stopit()
-        End If
-    End Sub
 
     Private Sub PieceMouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
         'Starts dragging a piece
@@ -497,20 +505,32 @@ Public Class MainWindow
 
         Try
             'Sends a disconnection message to the host
-            Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("%" + "$")
-            serverStream.Write(outStream, 0, outStream.Length)
-            serverStream.Flush()
+            If isHost Then
+                Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("~KILL" + "$")
+                serverStream.Write(outStream, 0, outStream.Length)
+                serverStream.Flush()
+            Else
+                Dim outStream As Byte() = System.Text.Encoding.ASCII.GetBytes("%" + "$")
+                serverStream.Write(outStream, 0, outStream.Length)
+                serverStream.Flush()
+            End If
 
-            'Waits for thread to end
+            'Waits for thread to end ... scratch that, just kill it
             If ctThread.IsAlive Then
                 Me.clientSocket.Close()
-                While ctThread.IsAlive
+                ctThread.Abort()
+                'While ctThread.IsAlive
 
-                End While
+                'End While
             End If
         Catch ex As Exception
 
         End Try
+
+        'Stops hosting if applicable
+        If isHost Then
+            HostWindow.stopit()
+        End If
     End Sub
 
     Private Sub Form1_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
