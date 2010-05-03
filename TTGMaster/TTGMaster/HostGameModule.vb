@@ -2,44 +2,44 @@
 Imports System.Text
 
 Module HostGameModule
+    Public clientSocket As TcpClient
+    Public keepGoing As Boolean = True
+
     Dim clientsList As New Hashtable
     Sub Main(ByVal portNumber As Integer)
         Dim serverSocket As New TcpListener(portNumber)
-        Dim clientSocket As TcpClient
         Dim counter As Integer
 
         serverSocket.Start()
         msg("Chat Server Started ....")
-        counter = 0
 
         'Main loop
-        While (True)
-            counter += 1
-            clientSocket = serverSocket.AcceptTcpClient()
+        While (keepGoing)
+            If serverSocket.Pending() Then
+                clientSocket = serverSocket.AcceptTcpClient()
 
-            Dim bytesFrom(10024) As Byte
-            Dim dataFromClient As String
+                Dim bytesFrom(10024) As Byte
+                Dim dataFromClient As String
 
-            'Waits for new connections
-            Dim networkStream As NetworkStream = _
-            clientSocket.GetStream()
-            networkStream.Read(bytesFrom, 0, CInt(clientSocket.ReceiveBufferSize))
-            dataFromClient = System.Text.Encoding.ASCII.GetString(bytesFrom)
-            dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"))
+                'Waits for new connections
+                Dim networkStream As NetworkStream = clientSocket.GetStream()
 
-            clientsList(dataFromClient) = clientSocket
+                networkStream.Read(bytesFrom, 0, CInt(clientSocket.ReceiveBufferSize))
+                dataFromClient = System.Text.Encoding.ASCII.GetString(bytesFrom)
+                dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"))
 
-            broadcast(dataFromClient + " Joined ", dataFromClient, False)
+                clientsList(dataFromClient) = clientSocket
 
-            msg(dataFromClient + " Joined chat room ")
-            Dim client As New handleClient
-            client.startClient(clientSocket, dataFromClient, clientsList)
+                broadcast(dataFromClient + " Joined ", dataFromClient, False)
+
+                msg(dataFromClient + " Joined chat room ")
+                Dim client As New handleClient
+                client.startClient(clientSocket, dataFromClient, clientsList)
+            End If
         End While
 
         clientSocket.Close()
         serverSocket.Stop()
-        msg("exit")
-        Console.ReadLine()
     End Sub
 
     Sub msg(ByVal mesg As String)
@@ -82,7 +82,7 @@ Module HostGameModule
                 'Sets the message for special commands in non-formated manner
                 If (String.Compare(msg(0), "@") = 0) Or (String.Compare(msg(0), "#") = 0) _
                 Or (String.Compare(msg(0), "*") = 0) Or (String.Compare(msg(0), "&") = 0) _
-                Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Then
+                Or (isDisposeCommand(msg)) Or (isLockCommand(msg)) Or (isKillCommand(msg)) Then
 
                     broadcastBytes = Encoding.ASCII.GetBytes(msg)
                 ElseIf isDiceCommand(msg) Then
@@ -146,6 +146,18 @@ Module HostGameModule
 
         Return False
 
+    End Function
+
+    Private Function isKillCommand(ByVal inMsg As String)
+        If inMsg.Length < 5 Then
+            Return False
+        End If
+
+        If Not (String.Compare(inMsg.Substring(0, 5), "~KILL") = 0) Then
+            Return False
+        End If
+
+        Return True
     End Function
 
     Private Function rollDie(ByVal inMsg As String, ByVal userName As String)

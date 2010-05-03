@@ -9,6 +9,7 @@
 
     Public Sub stopit()
         'Attempts to end the host thread
+        HostGameModule.keepGoing = False
         Thread1.Abort()
         Me.Close()
     End Sub

@@ -67,17 +67,17 @@ Public Class ConnectWindow
         'Checks to make sure the button should be enabled
         checkForEnable()
         If ConnectButton.Enabled Then
-            Dim n As String = UserName.Text.ToString
+            Dim name As String = UserName.Text.ToString
 
             If JoinRadio.Checked Then
                 'Joins game as client
                 MainWindow.setIsHost(False)
-                joinGame(n, IPAddressBox.Text.ToString, PortNumber.Value)
+                joinGame(name, IPAddressBox.Text.ToString, PortNumber.Value)
             Else
                 'Hosts game and also joins self as client
                 MainWindow.setIsHost(True)
                 hostGame(PortNumber.Value)
-                joinGame(n, "127.0.0.1", PortNumber.Value)
+                joinGame(name, "127.0.0.1", PortNumber.Value)
             End If
         End If
     End Sub
