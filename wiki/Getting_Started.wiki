@@ -25,8 +25,6 @@ The *Game Name* option is the name you would like your game called.
 *Port* number is the port you want people to connect through. This is important,
 make sure to give this value to those you want to join, as they will need it to connect to your game.
 
-*Password* is optional. Will allow only those that know the password to connect to your game.
-
 Once all needed information is given, finish creating your game by clicking the *Connect* button.
 
 *Troubleshooting* - If you receive an error message in red "Could not connect..." it may be that you have chosen an invalid or already in use Port value. Try using another Port.
@@ -46,8 +44,6 @@ The *IP* option specifies which IP address to connect to. Obtain this from the g
 *User Name* is the name which you would like to be referred to by.
 
 *Port* number is the port you connect to the host through. Obtain this from the host as well, it is also required.
-
-*Password* is optional. If the host set a password you will need this to join the game, otherwise leave it blank.
 
 Once all needed information is given, join the game by clicking the *Connect* button.
 
