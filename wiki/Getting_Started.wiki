@@ -31,7 +31,7 @@ Once all needed information is given, finish creating your game by clicking the 
 
 = Joining a Game =
 
-Start by ensuring that the host has already created a game, and obtain the following information from them: *IP address* to connect to, *Port number* to connect with, and *password* if used.
+Start by ensuring that the host has already created a game, and obtain the following information from them: *IP address* to connect to and *Port number* to connect with.
 
 http://i43.tinypic.com/v8pyqb.jpg
 
