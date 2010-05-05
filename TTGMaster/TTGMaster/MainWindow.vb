@@ -423,6 +423,14 @@ Public Class MainWindow
     Private Sub ChatInputBox_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ChatInputBox.TextChanged
         'Enables or disables the chat send button based on whether there are characters typed
 
+        If ChatInputBox.Text.Length = 1 Then
+            Dim i As Char = ChatInputBox.Text(0)
+
+            If (i = "$") Or (i = "@") Or (i = "#") Or (i = "%") Or (i = "&") Or (i = "~") Then
+                ChatInputBox.Text = ""
+            End If
+        End If
+
         If ChatInputBox.Text.Length > 0 Then
             ChatSendButton.Enabled = True
         Else
