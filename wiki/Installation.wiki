@@ -1,0 +1,10 @@
+#summary How to install TTGMaster.
+
+= Downloading =
+
+An installation file can be found at http://www.filehosting.org/file/details/141642/TTGMasterv1.0setup.exe . After providing an email address, an email with a link to the download will be sent to the given email. (If it is not seen in your inbox it may be in your junk box).
+
+
+= Installation =
+
+Run TTGMasterv1.0setup.exe. Follow the installation guide. Enjoy!
