@@ -29,4 +29,4 @@ First number is piece number, second is x position moved to, and third number is
 
 These commands can also be typed in for manual moving of pieces.
 
-One can manually roll dice using the *roll #d#* command. Replace the first # with the number of dice to be rolled and the second # with how many sides each dice has. For example, entering "roll 2d6" into the chat-box will return a roll value of 2 6-sided dice rolled. 
+One can manually roll dice using the *roll #d#* command. Replace the first # with the number of dice to be rolled and the second # with how many sides each die has. For example, entering "roll 2d6" into the chat-box will return a roll value of 2 6-sided dice rolled. 
