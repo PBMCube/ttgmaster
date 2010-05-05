@@ -11,4 +11,4 @@ Run TTGMasterv1.0setup.exe. Follow the installation guide. Enjoy!
 
 = Uninstalling = 
 
-To uninstall run the TTGMasterv1.0setup.exe executable again. If already installed, this should run through the uninstall process for TTGMaster.
+To uninstall run the TTGMasterv1.0setup.exe executable again. If TTGMaster is already installed, this should run through the uninstall process for TTGMaster.
