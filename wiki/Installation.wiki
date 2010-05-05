@@ -8,3 +8,7 @@ An installation file can be found http://www.mediafire.com/file/tmiyiyjomzk/TTGM
 = Installation =
 
 Run TTGMasterv1.0setup.exe. Follow the installation guide. Enjoy!
+
+= Uninstalling = 
+
+To uninstall run the TTGMasterv1.0setup.exe executable again. If already installed, this should run through the uninstall process for TTGMaster.
