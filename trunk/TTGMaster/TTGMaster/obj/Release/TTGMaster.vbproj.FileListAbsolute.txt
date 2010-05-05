@@ -1,0 +1,13 @@
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\bin\Release\TTGMaster.exe
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\bin\Release\TTGMaster.pdb
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\bin\Release\TTGMaster.xml
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\ResolveAssemblyReference.cache
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.MainWindow.resources
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.ConnectWindow.resources
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.HostWindow.resources
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.DieWindow.resources
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.Resources.resources
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.vbproj.GenerateResource.Cache
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.exe
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.xml
+C:\Users\hutcha2\Documents\SDD\ttgmaster\TTGMaster\TTGMaster\obj\Release\TTGMaster.pdb
