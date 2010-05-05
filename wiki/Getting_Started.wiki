@@ -53,7 +53,7 @@ This can be done either by clicking *Game* -> *Load Board* or by pressing ctrl+b
 
 http://i39.tinypic.com/2uig4lg.jpg
 
-A windows explorer window will pop up. Go into TTGMaster's bin/degub folder and select an image you wish to use as the board. It is important that all players who wish to play have this same image in their bin/debug folder.
+A windows explorer window will pop up. Go into TTGMaster's folder and select an image you wish to use as the board. It is important that all players who wish to play have this same image in their TTGMaster folder.
 
 http://i43.tinypic.com/154fz8j.jpg
 
@@ -65,7 +65,7 @@ Start by selecting *Game* -> *Add Piece* or by pressing ctrl+p.
 
 http://i43.tinypic.com/ou5wcx.jpg
 
-A Windows explorer window will pop up and allow you to select which image to use as a piece. Once again, this images location must be in the bin/debug folder. Once your image file is selected click open and that image will be added to the board as a movable piece.
+A Windows explorer window will pop up and allow you to select which image to use as a piece. Once again, this images location must be in the TTGMaster folder. Once your image file is selected click open and that image will be added to the board as a movable piece.
 
 = Adding Die(Dice) =
 
