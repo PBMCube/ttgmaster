@@ -90,7 +90,7 @@ During a game you may need to remove a piece or die object.
 
 http://i39.tinypic.com/20f9cwg.jpg
 
-To do this simply *right-click* the Piece of Die and select *Remove Piece*. This removes the piece or die from the game.
+To do this simply *right-click* the Piece or Die and select *Remove Piece*. This removes the piece or die from the game.
 
 = Playing your game =
 
