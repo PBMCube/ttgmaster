@@ -1,0 +1,1 @@
+Program simulates tabletop games of many sorts with multiple users over a network.
